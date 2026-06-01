@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="gold" x1="28" x2="100" y1="18" y2="112" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffe38a"/>
+      <stop offset=".45" stop-color="#d7a642"/>
+      <stop offset="1" stop-color="#9b681c"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="64" fill="#07101b"/>
+  <path d="M35 42h58l-7 20H42L35 42Z" fill="url(#gold)"/>
+  <path d="M42 42 50 25l14 17 14-17 8 17" fill="none" stroke="url(#gold)" stroke-width="7" stroke-linejoin="round"/>
+  <text x="64" y="87" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700" fill="url(#gold)">KC</text>
+</svg>
