@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "King Cleaning B.V",
-  description: "Professionele schoonmaakdiensten in Amsterdam"
+  description: "Professionele schoonmaak voor kantoren, scholen, sportscholen, trappenhuizen, restaurants en hotels in Amsterdam."
 };
 
 export default function RootLayout({

@@ -1,17 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
 
 type Language = "nl" | "en";
 
+const galleryImage = (id: string) =>
+  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=900&h=675&fit=crop`;
+
+const galleryImageExternal = (url: string) =>
+  `${url}${url.includes("?") ? "&" : "?"}w=900&h=675&fit=crop`;
+
 const images = {
+  hero:
+    "https://cdn.pixabay.com/photo/2026/03/02/15/24/los-angeles-cs-commercial-cleaning-10152157_1280.jpg",
   people:
     "https://images.pexels.com/photos/4099467/pexels-photo-4099467.jpeg?auto=compress&cs=tinysrgb&w=900",
   leader: "/Leader.PNG",
   team: "/Cleaners1.PNG",
   general:
-    "https://images.pexels.com/photos/4107120/pexels-photo-4107120.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "https://images.pexels.com/photos/4484078/pexels-photo-4484078.jpeg?auto=compress&cs=tinysrgb&w=1200",
+  offices: galleryImage("33728673"),
+  schools: galleryImage("4484078"),
+  gyms: galleryImageExternal(
+    "https://cdn.pixabay.com/photo/2026/03/02/15/24/los-angeles-cs-commercial-cleaning-10152157_1280.jpg"
+  ),
+  staircases: galleryImage("4107112"),
+  restaurants: galleryImage("8440062"),
+  hotels: galleryImage("4239091"),
   glass:
     "https://images.pexels.com/photos/33728673/pexels-photo-33728673.jpeg?auto=compress&cs=tinysrgb&w=1200",
   floor:
@@ -20,21 +36,14 @@ const images = {
     "https://images.pexels.com/photos/6197119/pexels-photo-6197119.jpeg?auto=compress&cs=tinysrgb&w=1200"
 };
 
-const officialServices = [
-  "Algemene schoonmaak",
-  "Glasbewassing / glazenwassen",
-  "Dieptereiniging / ontsmetting",
-  "Bouw- & opleveringsschoonmaak",
-  "Vloer- & tapijtonderhoud",
-  "Gevelreiniging",
-  "Overige schoonmaak op aanvraag"
-];
+const galleryFocus = ["center", "center", "center", "center 68%", "center 78%", "center"];
 
 const content = {
   nl: {
     nav: { home: "Home", about: "Over ons", services: "Diensten", work: "Werk", contact: "Contact" },
     hero: {
-      text: "Professionele schoonmaakdiensten met vaste teams, duidelijke afspraken en meetbare kwaliteit in Amsterdam.",
+      headline: "Uw frisse start, begint bij ons",
+      text: "Professionele schoonmaak voor kantoren, scholen, sportscholen, trappenhuizen, restaurants en hotels in Amsterdam.",
       viewServices: "Bekijk diensten",
       bookVisit: "Afspraak aanvragen"
     },
@@ -43,13 +52,13 @@ const content = {
       title: "King Cleaning staat voor schoon en zorgvuldig:",
       highlight: "lokaal, loyaal, mensgericht en transparant",
       suffix: "met de ziel van Zuidoost",
-      text: "Een Amsterdams schoonmaakbedrijf uit Zuidoost, met vaste teams, korte communicatielijnen en zichtbare kwaliteit."
+      text: "Een Amsterdams schoonmaakbedrijf uit Zuidoost voor commerciele locaties, met vaste teams, korte communicatielijnen en zichtbare kwaliteit."
     },
     stats: [
       {
-        value: "30+",
+        value: "10+",
         title: "Jaar ervaring",
-        description: "Praktische ervaring in woning-, gebouw- en onderhoudsschoonmaak in Amsterdam.",
+        description: "Ervaring in schoonmaak voor kantoren, scholen, sportscholen, trappenhuizen, restaurants en hotels.",
         tone: "featured"
       },
       { value: "1 dag", title: "Reactietijd", description: "Reactie op meldingen binnen een werkdag." },
@@ -68,11 +77,11 @@ const content = {
     principles: [
       {
         title: "Onze visie",
-        text: "Goede schoonmaak betekent de omgeving kennen, snel schakelen met beheer en bewoners, en werken met duidelijke afspraken."
+        text: "Goede schoonmaak betekent de locatie kennen, snel schakelen met facility managers en werken met duidelijke afspraken."
       },
       {
         title: "Onze missie",
-        text: "Schone en veilige leef- en werkomgevingen toegankelijk maken met constant, meetbaar onderhoud en betrouwbare teams."
+        text: "Schone en veilige werkomgevingen en publieke ruimtes leveren met constant, meetbaar onderhoud en betrouwbare teams."
       }
     ],
     process: {
@@ -88,55 +97,70 @@ const content = {
     gallery: {
       eyebrow: "Diensten",
       title: "Achter het werk",
-      text: "Een indruk van de nette, verzorgde ruimtes waar King Cleaning voor staat.",
+      text: "Een indruk van de commerciele locaties waar King Cleaning dagelijks voor zorgt.",
       items: [
-        { label: "Algemene schoonmaak", image: images.general },
-        { label: "Glasbewassing", image: images.glass },
-        { label: "Vloer- & tapijtonderhoud", image: images.floor },
-        { label: "Bouw- & opleveringsschoonmaak", image: images.handover }
+        { label: "Kantoren", image: images.offices },
+        { label: "Scholen", image: images.schools },
+        { label: "Sportscholen", image: images.gyms },
+        { label: "Trappenhuizen", image: images.staircases },
+        { label: "Restaurants", image: images.restaurants },
+        { label: "Hotels", image: images.hotels }
       ]
     },
     services: {
       eyebrow: "Diensten",
       title: "Onze schoonmaakdiensten",
-      text: "Kies de schoonmaak die past bij het gebouw, de frequentie en de gewenste kwaliteitsafspraken.",
-      aria: "Officiele diensten van King Cleaning"
+      text: "Schoonmaak op maat voor commerciele locaties, met duidelijke planning, vaste teams en kwaliteitscontrole.",
+      aria: "Sectoren en diensten van King Cleaning",
+      sectors: [
+        "Kantoren",
+        "Scholen",
+        "Sportscholen",
+        "Trappenhuizen",
+        "Restaurants",
+        "Hotels"
+      ]
     },
     plans: [
       {
-        name: "Algemene schoonmaak",
+        name: "Contract schoonmaak",
         price: "Op maat",
-        description: "Voor periodiek onderhoud van gebouwen, kantoren, gedeelde ruimtes en wooncomplexen.",
+        description: "Voor dagelijks of periodiek onderhoud van kantoren, scholen, sportscholen en trappenhuizen.",
         features: [
           "Algemene schoonmaak",
-          "Overige schoonmaak op aanvraag"
+          "Trappenhuizen en gemeenschappelijke ruimtes",
+          "Vloer- en sanitaire ruimtes"
         ]
       },
       {
-        name: "Specialistische schoonmaak",
+        name: "Horeca & hospitality",
         price: "Op maat",
-        description: "Voor specialistisch schoonmaakwerk dat extra aandacht of technische zorg vraagt.",
+        description: "Voor restaurants en hotels waar hygiëne, presentatie en flexibele planning essentieel zijn.",
         featured: true,
         features: [
-          "Glasbewassing / glazenwassen",
-          "Dieptereiniging / ontsmetting",
-          "Vloer- & tapijtonderhoud",
-          "Gevelreiniging"
+          "Restaurants",
+          "Hotels",
+          "Keukens, lobby's en gastruimtes",
+          "Dieptereiniging op aanvraag"
         ]
       },
       {
-        name: "Project & oplevering",
+        name: "Specialistisch werk",
         price: "Op maat",
-        description: "Voor schoonmaak rondom bouw en oplevering.",
+        description: "Voor glas, gevels, vloeren en oplevering na bouw of renovatie.",
         features: [
+          "Glasbewassing",
+          "Gevelreiniging",
+          "Vloer- & tapijtonderhoud",
           "Bouw- & opleveringsschoonmaak"
         ]
       }
     ],
     contact: {
       eyebrow: "Contact",
-      title: "Houd uw gebouw fris",
-      text: "Van periodieke schoonmaak tot specialistisch werk: King Cleaning maakt het eenvoudig om scope, planning en kwaliteit af te spreken.",
+      title: "Houd uw locatie fris",
+      text: "Van kantoren en scholen tot restaurants en hotels: King Cleaning maakt het eenvoudig om scope, planning en kwaliteit af te spreken.",
+      tagline: "Uw frisse start, begint bij ons.",
       getStarted: "Neem contact op",
       reach: "Bereikbaar via",
       business: "Bedrijfsgegevens",
@@ -148,7 +172,8 @@ const content = {
   en: {
     nav: { home: "Home", about: "About", services: "Services", work: "Work", contact: "Contact" },
     hero: {
-      text: "Professional cleaning services with fixed teams, clear agreements, and measurable quality in Amsterdam.",
+      headline: "Your fresh start begins with us",
+      text: "Professional cleaning for offices, schools, gyms, staircases, restaurants, and hotels in Amsterdam.",
       viewServices: "View Services",
       bookVisit: "Book a Visit"
     },
@@ -157,13 +182,13 @@ const content = {
       title: "King Cleaning stands for clean and careful:",
       highlight: "local, loyal, people-oriented and transparent",
       suffix: "with the soul of Zuidoost",
-      text: "An Amsterdam-based cleaning company rooted in Zuidoost, working with fixed teams, short communication lines, and visible quality."
+      text: "An Amsterdam-based commercial cleaning company rooted in Zuidoost, working with fixed teams, short communication lines, and visible quality."
     },
     stats: [
       {
-        value: "30+",
+        value: "10+",
         title: "Years experience",
-        description: "Amsterdam-based practical experience in residential and building maintenance.",
+        description: "Experience cleaning offices, schools, gyms, staircases, restaurants, and hotels.",
         tone: "featured"
       },
       { value: "1 day", title: "Response time", description: "Response to notifications within one business day." },
@@ -182,11 +207,11 @@ const content = {
     principles: [
       {
         title: "Our Vision",
-        text: "Good cleaning is knowing the environment, switching quickly with management and residents, and working with clear agreements."
+        text: "Good cleaning means knowing the site, responding quickly to facility managers, and working with clear agreements."
       },
       {
         title: "Our Mission",
-        text: "Making clean and safe living and working environments accessible through constant, measurable maintenance with reliable teams."
+        text: "Delivering clean and safe workplaces and public spaces through consistent, measurable maintenance with reliable teams."
       }
     ],
     process: {
@@ -202,55 +227,70 @@ const content = {
     gallery: {
       eyebrow: "Services",
       title: "Behind the Work",
-      text: "A look at the clean, well-kept spaces King Cleaning stands for.",
+      text: "A look at the commercial locations King Cleaning supports every day.",
       items: [
-        { label: "General Cleaning", image: images.general },
-        { label: "Glass Washing / Window Cleaning", image: images.glass },
-        { label: "Floor & Carpet Maintenance", image: images.floor },
-        { label: "Construction & Handover Cleaning", image: images.handover }
+        { label: "Offices", image: images.offices },
+        { label: "Schools", image: images.schools },
+        { label: "Gyms", image: images.gyms },
+        { label: "Staircases", image: images.staircases },
+        { label: "Restaurants", image: images.restaurants },
+        { label: "Hotels", image: images.hotels }
       ]
     },
     services: {
       eyebrow: "Services",
       title: "Our Cleaning Work",
-      text: "Choose the cleaning scope that matches the building, frequency, and quality agreements you need.",
-      aria: "Official King Cleaning services"
+      text: "Tailored cleaning for commercial locations, with clear planning, fixed teams, and quality control.",
+      aria: "King Cleaning sectors and services",
+      sectors: [
+        "Offices",
+        "Schools",
+        "Gyms",
+        "Staircases",
+        "Restaurants",
+        "Hotels"
+      ]
     },
     plans: [
       {
-        name: "General Cleaning",
+        name: "Contract Cleaning",
         price: "Custom",
-        description: "For recurring maintenance of buildings, offices, shared areas, and residential complexes.",
+        description: "For daily or recurring maintenance of offices, schools, gyms, and staircases.",
         features: [
-          "Algemene schoonmaak / general cleaning",
-          "Overige schoonmaak op aanvraag / other cleaning on request"
+          "General cleaning",
+          "Staircases and shared areas",
+          "Floors and sanitary spaces"
         ]
       },
       {
-        name: "Specialist Cleaning",
+        name: "Hospitality",
         price: "Custom",
-        description: "For specialist cleaning work that needs extra care or technical detail.",
+        description: "For restaurants and hotels where hygiene, presentation, and flexible planning matter.",
         featured: true,
         features: [
-          "Glasbewassing / window cleaning",
-          "Dieptereiniging / ontsmetting / deep cleaning and disinfection",
-          "Vloer- & tapijtonderhoud / floor and carpet maintenance",
-          "Gevelreiniging / facade cleaning"
+          "Restaurants",
+          "Hotels",
+          "Kitchens, lobbies, and guest areas",
+          "Deep cleaning on request"
         ]
       },
       {
-        name: "Project & Delivery",
+        name: "Specialist Work",
         price: "Custom",
-        description: "For cleaning around construction and handover.",
+        description: "For glass, facades, floors, and post-construction handover cleaning.",
         features: [
-          "Bouw- & opleveringsschoonmaak / construction and handover cleaning"
+          "Window cleaning",
+          "Facade cleaning",
+          "Floor and carpet maintenance",
+          "Construction and handover cleaning"
         ]
       }
     ],
     contact: {
       eyebrow: "Contact Us",
-      title: "Let's Keep Your Building Fresh",
-      text: "From recurring cleaning to specialist work, King Cleaning makes it simple to agree on scope, planning, and quality.",
+      title: "Let's Keep Your Location Fresh",
+      text: "From offices and schools to restaurants and hotels, King Cleaning makes it simple to agree on scope, planning, and quality.",
+      tagline: "Your fresh start begins with us.",
       getStarted: "Get Started",
       reach: "Reach Out",
       business: "Business Details",
@@ -274,7 +314,42 @@ const emailLink = (subject: string) =>
 
 export default function FixedHomePage() {
   const [language, setLanguage] = useState<Language>("nl");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
+  const menuWasOpenRef = useRef(false);
   const t = content[language];
+
+  const closeMenu = () => setMenuOpen(false);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (menuOpen) {
+      menuWasOpenRef.current = true;
+      const firstLink = document.querySelector<HTMLElement>("#mobile-menu a");
+      firstLink?.focus();
+      return;
+    }
+
+    if (menuWasOpenRef.current) {
+      menuToggleRef.current?.focus();
+      menuWasOpenRef.current = false;
+    }
+  }, [menuOpen]);
 
   return (
     <main
@@ -286,12 +361,12 @@ export default function FixedHomePage() {
     >
       <section className={styles.heroWrap}>
         <div className={styles.container}>
-          <header className={styles.header}>
-            <a className={styles.brand} href="#home">
+          <header className={`${styles.header} ${menuOpen ? styles.headerMenuOpen : ""}`}>
+            <a className={styles.brand} href="#home" onClick={closeMenu}>
               <img className={styles.brandLogo} src="/King-Logo.png" alt="King Cleaning B.V logo" />
               <span>King Cleaning B.V</span>
             </a>
-            <nav className={styles.nav}>
+            <nav className={styles.nav} aria-label="Main navigation">
               <a href="#home">{t.nav.home}</a>
               <a href="#about">{t.nav.about}</a>
               <a href="#services">{t.nav.services}</a>
@@ -321,19 +396,32 @@ export default function FixedHomePage() {
                 <span className={styles.ctaArrow}>-&gt;</span>
               </a>
             </div>
+            <button
+              ref={menuToggleRef}
+              className={`${styles.menuToggle} ${menuOpen ? styles.menuToggleOpen : ""}`}
+              type="button"
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              onClick={() => setMenuOpen((open) => !open)}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
           </header>
 
           <div className={styles.heroCard} id="home">
             <img
               className={styles.heroImage}
-              src="https://images.pexels.com/photos/4239113/pexels-photo-4239113.jpeg?auto=compress&cs=tinysrgb&w=1800"
-              alt="Commercial cleaning work in a professional building"
+              src={images.hero}
+              alt="Professional commercial floor cleaning in a business facility"
             />
             <div className={styles.heroShade} />
             <div className={styles.heroInner}>
               <div className={styles.heroLead}>
                 <span className={styles.pill}>King Cleaning B.V</span>
-                <h1>Uw frisse start, begint bij ons</h1>
+                <h1>{t.hero.headline}</h1>
               </div>
               <div className={styles.heroAside}>
                 <p>{t.hero.text}</p>
@@ -436,9 +524,16 @@ export default function FixedHomePage() {
           </div>
 
           <div className={styles.galleryGrid}>
-            {t.gallery.items.map((item) => (
+            {t.gallery.items.map((item, index) => (
               <article key={item.label} className={styles.galleryCard}>
-                <img src={item.image} alt={item.label} />
+                <img
+                  src={item.image}
+                  alt={`${item.label} cleaning service`}
+                  width={900}
+                  height={675}
+                  loading="lazy"
+                  style={{ objectPosition: galleryFocus[index] ?? "center" }}
+                />
                 <span>{item.label}</span>
               </article>
             ))}
@@ -457,7 +552,7 @@ export default function FixedHomePage() {
           </div>
 
           <div className={styles.servicePills} aria-label={t.services.aria}>
-            {officialServices.map((service) => (
+            {t.services.sectors.map((service) => (
               <span key={service}>{service}</span>
             ))}
           </div>
@@ -504,7 +599,7 @@ export default function FixedHomePage() {
           <div className={styles.contactPanel}>
             <div className={styles.contactLead}>
               <span>King Cleaning B.V</span>
-              <h3>Uw frisse start, begint bij ons.</h3>
+              <h3>{t.contact.tagline}</h3>
               <a className={styles.primaryAction} href={emailLink("King Cleaning website inquiry")}>
                 {t.contact.getStarted}
               </a>
@@ -533,6 +628,69 @@ export default function FixedHomePage() {
           </div>
         </div>
       </section>
+
+      <div
+        id="mobile-menu"
+        className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuOpen : ""}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label={language === "nl" ? "Navigatiemenu" : "Navigation menu"}
+        aria-hidden={!menuOpen}
+      >
+        <div className={styles.mobileMenuPanel}>
+          <div className={styles.mobileMenuHeader}>
+            <span className={styles.mobileMenuTitle}>Menu</span>
+            <button
+              className={styles.mobileMenuClose}
+              type="button"
+              aria-label="Close menu"
+              onClick={closeMenu}
+            >
+              {language === "nl" ? "Sluiten" : "Close"}
+            </button>
+          </div>
+          <nav className={styles.mobileNav} aria-label="Mobile navigation">
+            <a href="#home" onClick={closeMenu}>
+              {t.nav.home}
+            </a>
+            <a href="#about" onClick={closeMenu}>
+              {t.nav.about}
+            </a>
+            <a href="#services" onClick={closeMenu}>
+              {t.nav.services}
+            </a>
+            <a href="#project" onClick={closeMenu}>
+              {t.nav.work}
+            </a>
+            <a href="#contact" onClick={closeMenu}>
+              {t.nav.contact}
+            </a>
+          </nav>
+          <div className={styles.mobileMenuFooter}>
+            <div className={styles.languageToggle} aria-label="Language selector">
+              <button
+                className={language === "nl" ? styles.languageActive : ""}
+                type="button"
+                onClick={() => setLanguage("nl")}
+                aria-pressed={language === "nl"}
+              >
+                NL
+              </button>
+              <button
+                className={language === "en" ? styles.languageActive : ""}
+                type="button"
+                onClick={() => setLanguage("en")}
+                aria-pressed={language === "en"}
+              >
+                EN
+              </button>
+            </div>
+            <a className={styles.mobileMenuCta} href="#contact" onClick={closeMenu}>
+              {t.nav.contact}
+            </a>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }
