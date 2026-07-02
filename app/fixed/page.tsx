@@ -41,7 +41,7 @@ const galleryFocus = ["center", "center", "center", "center 68%", "center 78%", 
 
 const content = {
   nl: {
-    nav: { home: "Home", about: "Over ons", services: "Diensten", work: "Werk", contact: "Contact" },
+    nav: { home: "Home", about: "Over ons", services: "Diensten", work: "Impressie", contact: "Contact" },
     hero: {
       headline: "Uw frisse start, begint bij ons",
       text: "Professionele schoonmaak voor kantoren, scholen, sportscholen, trappenhuizen, restaurants en hotels in Amsterdam.",
@@ -97,7 +97,7 @@ const content = {
     },
     gallery: {
       eyebrow: "Diensten",
-      title: "Achter het werk",
+      title: "Werk in beeld",
       text: "Een indruk van de commerciele locaties waar King Cleaning dagelijks voor zorgt.",
       items: [
         { label: "Kantoren", image: images.offices },
@@ -166,12 +166,17 @@ const content = {
       reach: "Bereikbaar via",
       business: "Bedrijfsgegevens",
       director: "Directeur: King Prosper Asem",
-      quick: "Snelle links"
+      quick: "Snelle links",
+      formName: "Naam",
+      formEmail: "E-mail",
+      formPhone: "Telefoon",
+      formMessage: "Bericht",
+      formSubmit: "Aanvraag versturen"
     },
     buttons: { bookPackage: "Vraag deze dienst aan" }
   },
   en: {
-    nav: { home: "Home", about: "About", services: "Services", work: "Work", contact: "Contact" },
+    nav: { home: "Home", about: "About", services: "Services", work: "Gallery", contact: "Contact" },
     hero: {
       headline: "Your fresh start begins with us",
       text: "Professional cleaning for offices, schools, gyms, staircases, restaurants, and hotels in Amsterdam.",
@@ -227,7 +232,7 @@ const content = {
     },
     gallery: {
       eyebrow: "Services",
-      title: "Behind the Work",
+      title: "Work in Pictures",
       text: "A look at the commercial locations King Cleaning supports every day.",
       items: [
         { label: "Offices", image: images.offices },
@@ -296,7 +301,12 @@ const content = {
       reach: "Reach Out",
       business: "Business Details",
       director: "Director: King Prosper Asem",
-      quick: "Quick Links"
+      quick: "Quick Links",
+      formName: "Name",
+      formEmail: "Email",
+      formPhone: "Phone",
+      formMessage: "Message",
+      formSubmit: "Send Request"
     },
     buttons: { bookPackage: "Book This Package" }
   }
@@ -618,9 +628,36 @@ export default function FixedHomePage() {
             <div className={styles.contactLead}>
               <span>King Cleaning B.V</span>
               <h3>{t.contact.tagline}</h3>
-              <a className={styles.primaryAction} href={emailLink("King Cleaning website inquiry")}>
-                {t.contact.getStarted}
-              </a>
+              <form
+                className={styles.contactForm}
+                action="https://formsubmit.co/info@kingcleaning.nl"
+                method="POST"
+              >
+                <input type="hidden" name="_subject" value="Nieuwe aanvraag via King Cleaning website" />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_next" value="https://kingcleaningbv.nl/#contact" />
+                <input className={styles.honeyField} type="text" name="_honey" tabIndex={-1} autoComplete="off" />
+                <label>
+                  <span>{t.contact.formName}</span>
+                  <input name="name" type="text" autoComplete="name" required />
+                </label>
+                <label>
+                  <span>{t.contact.formEmail}</span>
+                  <input name="email" type="email" autoComplete="email" required />
+                </label>
+                <label>
+                  <span>{t.contact.formPhone}</span>
+                  <input name="phone" type="tel" autoComplete="tel" />
+                </label>
+                <label>
+                  <span>{t.contact.formMessage}</span>
+                  <textarea name="message" rows={4} required />
+                </label>
+                <button className={styles.primaryAction} type="submit">
+                  {t.contact.formSubmit}
+                </button>
+              </form>
             </div>
 
             <div className={styles.contactLinks}>
