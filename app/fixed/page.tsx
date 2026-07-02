@@ -1,5 +1,6 @@
 "use client";
 
+import type { MouseEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
 
@@ -321,6 +322,23 @@ export default function FixedHomePage() {
 
   const closeMenu = () => setMenuOpen(false);
 
+  const navigateToSection = (event: MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    event.preventDefault();
+    menuWasOpenRef.current = false;
+    setMenuOpen(false);
+
+    const target = document.getElementById(sectionId);
+    if (!target) {
+      return;
+    }
+
+    const headerOffset = window.matchMedia("(max-width: 820px)").matches ? 76 : 0;
+    const top = target.getBoundingClientRect().top + window.scrollY - headerOffset;
+
+    window.history.pushState(null, "", `#${sectionId}`);
+    window.scrollTo({ top, behavior: "smooth" });
+  };
+
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
 
@@ -362,15 +380,15 @@ export default function FixedHomePage() {
       <section className={styles.heroWrap}>
         <div className={styles.container}>
           <header className={`${styles.header} ${menuOpen ? styles.headerMenuOpen : ""}`}>
-            <a className={styles.brand} href="#home" onClick={closeMenu}>
+            <a className={styles.brand} href="#home" onClick={(event) => navigateToSection(event, "home")}>
               <img className={styles.brandLogo} src="/King-Logo.png" alt="King Cleaning B.V logo" />
               <span>King Cleaning B.V</span>
             </a>
             <nav className={styles.nav} aria-label="Main navigation">
-              <a href="#home">{t.nav.home}</a>
-              <a href="#about">{t.nav.about}</a>
-              <a href="#services">{t.nav.services}</a>
-              <a href="#project">{t.nav.work}</a>
+              <a href="#home" onClick={(event) => navigateToSection(event, "home")}>{t.nav.home}</a>
+              <a href="#about" onClick={(event) => navigateToSection(event, "about")}>{t.nav.about}</a>
+              <a href="#services" onClick={(event) => navigateToSection(event, "services")}>{t.nav.services}</a>
+              <a href="#project" onClick={(event) => navigateToSection(event, "project")}>{t.nav.work}</a>
             </nav>
             <div className={styles.headerActions}>
               <div className={styles.languageToggle} aria-label="Language selector">
@@ -391,7 +409,7 @@ export default function FixedHomePage() {
                   EN
                 </button>
               </div>
-              <a className={styles.cta} href="#contact">
+              <a className={styles.cta} href="#contact" onClick={(event) => navigateToSection(event, "contact")}>
                 {t.nav.contact}
                 <span className={styles.ctaArrow}>-&gt;</span>
               </a>
@@ -426,7 +444,7 @@ export default function FixedHomePage() {
               <div className={styles.heroAside}>
                 <p>{t.hero.text}</p>
                 <div className={styles.heroActions}>
-                  <a className={styles.primaryAction} href="#services">
+                  <a className={styles.primaryAction} href="#services" onClick={(event) => navigateToSection(event, "services")}>
                     {t.hero.viewServices}
                   </a>
                   <a className={styles.secondaryAction} href={emailLink("Book a visit with King Cleaning B.V")}>
@@ -619,10 +637,10 @@ export default function FixedHomePage() {
               </div>
               <div>
                 <span>{t.contact.quick}</span>
-                <a href="#about">{t.nav.about}</a>
-                <a href="#services">{t.nav.services}</a>
-                <a href="#project">{t.nav.work}</a>
-                <a href="#contact">{t.nav.contact}</a>
+                <a href="#about" onClick={(event) => navigateToSection(event, "about")}>{t.nav.about}</a>
+                <a href="#services" onClick={(event) => navigateToSection(event, "services")}>{t.nav.services}</a>
+                <a href="#project" onClick={(event) => navigateToSection(event, "project")}>{t.nav.work}</a>
+                <a href="#contact" onClick={(event) => navigateToSection(event, "contact")}>{t.nav.contact}</a>
               </div>
             </div>
           </div>
@@ -650,19 +668,19 @@ export default function FixedHomePage() {
             </button>
           </div>
           <nav className={styles.mobileNav} aria-label="Mobile navigation">
-            <a href="#home" onClick={closeMenu}>
+            <a href="#home" onClick={(event) => navigateToSection(event, "home")}>
               {t.nav.home}
             </a>
-            <a href="#about" onClick={closeMenu}>
+            <a href="#about" onClick={(event) => navigateToSection(event, "about")}>
               {t.nav.about}
             </a>
-            <a href="#services" onClick={closeMenu}>
+            <a href="#services" onClick={(event) => navigateToSection(event, "services")}>
               {t.nav.services}
             </a>
-            <a href="#project" onClick={closeMenu}>
+            <a href="#project" onClick={(event) => navigateToSection(event, "project")}>
               {t.nav.work}
             </a>
-            <a href="#contact" onClick={closeMenu}>
+            <a href="#contact" onClick={(event) => navigateToSection(event, "contact")}>
               {t.nav.contact}
             </a>
           </nav>
@@ -685,7 +703,7 @@ export default function FixedHomePage() {
                 EN
               </button>
             </div>
-            <a className={styles.mobileMenuCta} href="#contact" onClick={closeMenu}>
+            <a className={styles.mobileMenuCta} href="#contact" onClick={(event) => navigateToSection(event, "contact")}>
               {t.nav.contact}
             </a>
           </div>
