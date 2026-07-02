@@ -652,7 +652,7 @@ export default function FixedHomePage() {
                 </label>
                 <label>
                   <span>{t.contact.formMessage}</span>
-                  <textarea name="message" rows={4} required />
+                  <textarea name="message" rows={3} required />
                 </label>
                 <button className={styles.primaryAction} type="submit">
                   {t.contact.formSubmit}
