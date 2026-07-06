@@ -14,7 +14,7 @@ const images = {
   planning: "/Leader.PNG",
   team: "/Cleaners1.PNG",
   quality:
-    "https://images.pexels.com/photos/6195126/pexels-photo-6195126.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "https://images.pexels.com/photos/7688460/pexels-photo-7688460.jpeg?auto=compress&cs=tinysrgb&w=1200",
   offices:
     "https://images.pexels.com/photos/6195126/pexels-photo-6195126.jpeg?auto=compress&cs=tinysrgb&w=1200",
   schools:
@@ -22,7 +22,7 @@ const images = {
   gyms:
     "https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=1200",
   staircases:
-    "https://images.pexels.com/photos/681331/pexels-photo-681331.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    "https://images.pexels.com/photos/1757807/pexels-photo-1757807.jpeg?auto=compress&cs=tinysrgb&w=1200",
   restaurants:
     "https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=1200",
   hotels:
@@ -89,7 +89,7 @@ const content = {
       cards: [
         { name: "Directie & planning", role: "Onder leiding van King Prosper Asem", image: images.planning },
         { name: "Vaste lokale schoonmaakteams", role: "Algemene en specialistische schoonmaak", image: images.team },
-        { name: "Kwaliteit & communicatie", role: "Rapportages, logboeken en opvolging", image: images.quality, alt: "Professionele schoonmaker met materiaal voor kwaliteitscontrole" }
+        { name: "Kwaliteit & communicatie", role: "Rapportages, logboeken en opvolging", image: images.quality, alt: "Professionele bespreking van rapporten en opvolging" }
       ]
     },
     gallery: {
@@ -223,7 +223,7 @@ const content = {
       cards: [
         { name: "Director & Planning", role: "Led by King Prosper Asem", image: images.planning },
         { name: "Fixed Local Cleaning Teams", role: "General & specialist cleaning", image: images.team },
-        { name: "Quality & Communication", role: "Reports, logbooks & follow-up", image: images.quality, alt: "Professional cleaner with equipment for quality follow-up" }
+        { name: "Quality & Communication", role: "Reports, logbooks & follow-up", image: images.quality, alt: "Professional review of reports and follow-up" },
       ]
     },
     gallery: {
@@ -248,7 +248,7 @@ const content = {
         },
         {
           label: "Staircases",
-          alt: "Well-maintained building staircase after cleaning",
+          alt: "Clean interior stairwell in a commercial building",
           image: images.staircases
         },
         {
