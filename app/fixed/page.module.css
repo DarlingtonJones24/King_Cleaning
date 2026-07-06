@@ -3,6 +3,7 @@
   max-width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
+  overscroll-behavior-x: none;
   color: #10272c;
 }
 
@@ -12,6 +13,7 @@
   min-width: 0;
   margin: 0;
   padding-inline: clamp(20px, 4vw, 64px);
+  overflow-x: hidden;
 }
 
 .section {
@@ -19,11 +21,14 @@
   width: 100%;
   max-width: 100%;
   min-width: 0;
+  overflow-x: hidden;
 }
 
 .heroWrap {
   width: 100%;
+  max-width: 100%;
   padding: 0;
+  overflow-x: hidden;
 }
 
 .header {
@@ -352,7 +357,7 @@
 
 .aboutSplit {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   gap: clamp(24px, 4vw, 48px);
   align-items: center;
 }
@@ -785,6 +790,7 @@
   max-width: 100%;
   min-width: 0;
   overflow: hidden;
+  contain: inline-size;
 }
 
 .selectorIntro h3,
@@ -866,11 +872,15 @@
 }
 
 .tableScrollRegion {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   position: relative;
   margin-top: 18px;
   width: 100%;
   max-width: 100%;
   min-width: 0;
+  overflow: hidden;
+  contain: inline-size;
 }
 
 .tableScrollHint {
@@ -878,12 +888,14 @@
 }
 
 .tableWrap {
+  display: block;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
   width: 100%;
   max-width: 100%;
   min-width: 0;
+  contain: inline-size;
 }
 
 .pricingTable {
@@ -938,6 +950,10 @@
   background: #0d5059;
   color: #ffffff;
   box-shadow: 0 24px 52px rgba(13, 80, 89, 0.26);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .siteFooter {
@@ -1329,10 +1345,24 @@
   }
 
   .brandLogo {
-    height: 56px;
+    height: 48px;
     width: auto;
-    max-width: min(200px, 62vw);
-    flex-shrink: 0;
+    max-width: calc(100vw - 96px);
+    flex-shrink: 1;
+  }
+
+  .aboutCopy,
+  .aboutCopy h2,
+  .aboutCopy p,
+  .centerIntro,
+  .centerIntro h2,
+  .centerIntro p,
+  .processHeading,
+  .processHeading h2,
+  .processHeading p,
+  .heroLead h1 {
+    max-width: 100%;
+    overflow-wrap: anywhere;
   }
 
   .nav,

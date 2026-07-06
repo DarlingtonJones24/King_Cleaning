@@ -16,6 +16,8 @@ html,
 body {
   width: 100%;
   max-width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
 }
 
 html {
@@ -24,14 +26,13 @@ html {
     radial-gradient(circle at top right, rgba(11, 97, 99, 0.08), transparent 20%),
     var(--page-bg);
   min-height: 100%;
-  overflow-x: hidden;
 }
 
 body {
   margin: 0;
   min-height: 100%;
-  overflow-x: hidden;
   overflow-y: auto;
+  touch-action: pan-y pinch-zoom;
   background:
     radial-gradient(circle at top left, rgba(151, 214, 208, 0.28), transparent 28%),
     radial-gradient(circle at top right, rgba(11, 97, 99, 0.08), transparent 20%),

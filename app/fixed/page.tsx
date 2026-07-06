@@ -461,6 +461,23 @@ export default function FixedHomePage() {
   }, [menuOpen]);
 
   useEffect(() => {
+    const resetHorizontalScroll = () => {
+      if (window.scrollX !== 0) {
+        window.scrollTo(0, window.scrollY);
+      }
+    };
+
+    resetHorizontalScroll();
+    window.addEventListener("scroll", resetHorizontalScroll, { passive: true });
+    window.addEventListener("resize", resetHorizontalScroll);
+
+    return () => {
+      window.removeEventListener("scroll", resetHorizontalScroll);
+      window.removeEventListener("resize", resetHorizontalScroll);
+    };
+  }, []);
+
+  useEffect(() => {
     if (menuOpen) {
       menuWasOpenRef.current = true;
       document.querySelector<HTMLElement>("#mobile-menu a")?.focus();
