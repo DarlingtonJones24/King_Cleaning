@@ -67,7 +67,7 @@
   font-size: 16px;
 }
 
-.brandLogo {
+.brandLogoFull {
   width: auto;
   height: 64px;
   max-width: min(240px, 46vw);
@@ -75,6 +75,11 @@
   flex: 0 0 auto;
   object-fit: contain;
   object-position: left center;
+}
+
+.brandIcon,
+.brandText {
+  display: none;
 }
 
 .nav {
@@ -1349,26 +1354,55 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    flex-wrap: nowrap;
+    align-items: center;
     justify-content: space-between;
     gap: 12px;
+    min-height: 56px;
     margin-inline: 0;
-    padding: 12px 16px;
-    background: #edf5f3;
-    border-bottom: 1px solid rgba(12, 86, 96, 0.08);
+    padding: max(8px, env(safe-area-inset-top)) 16px 8px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(12, 86, 96, 0.06);
+    box-shadow: 0 6px 24px rgba(16, 39, 44, 0.06);
   }
 
   .brand {
     flex: 1 1 auto;
     min-width: 0;
-    font-size: 17px;
+    align-items: center;
+    gap: 10px;
   }
 
-  .brandLogo {
-    height: 48px;
-    width: auto;
-    max-width: calc(100vw - 96px);
-    flex-shrink: 1;
+  .brandLogoFull {
+    display: none;
+  }
+
+  .brandIcon {
+    display: block;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+  }
+
+  .brandText {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    color: #0c5660;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .menuToggle {
+    display: inline-flex;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    box-shadow: 0 8px 18px rgba(16, 39, 44, 0.08);
   }
 
   .aboutSection .container {
@@ -1432,10 +1466,6 @@
     display: none;
   }
 
-  .menuToggle {
-    display: inline-flex;
-  }
-
   .heroCard {
     min-height: 480px;
     border-radius: 0;
@@ -1445,16 +1475,12 @@
   .heroInner {
     min-height: 480px;
     align-items: stretch;
-    padding: 24px 16px;
-  }
-
-  .heroLead {
-    width: 100%;
-    max-width: 100%;
+    padding: 28px 20px 24px;
   }
 
   .heroLead h1 {
-    font-size: clamp(38px, 12vw, 56px);
+    font-size: clamp(34px, 10vw, 48px);
+    line-height: 1.02;
     max-width: 100%;
   }
 
