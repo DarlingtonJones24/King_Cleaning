@@ -392,6 +392,7 @@ export default function FixedHomePage() {
   const [message, setMessage] = useState("");
   const menuToggleRef = useRef<HTMLButtonElement>(null);
   const menuWasOpenRef = useRef(false);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const t = content[language];
   const s = t.services;
 
@@ -467,13 +468,44 @@ export default function FixedHomePage() {
       }
     };
 
+    const onTouchStart = (event: TouchEvent) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+    };
+
+    const onTouchMove = (event: TouchEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.closest("[data-table-scroll='true']")) return;
+
+      const start = touchStartRef.current;
+      const touch = event.touches[0];
+      if (!start || !touch) return;
+
+      const deltaX = Math.abs(touch.clientX - start.x);
+      const deltaY = Math.abs(touch.clientY - start.y);
+      if (deltaX > deltaY && deltaX > 10) {
+        event.preventDefault();
+      }
+    };
+
+    const onTouchEnd = () => {
+      touchStartRef.current = null;
+    };
+
     resetHorizontalScroll();
     window.addEventListener("scroll", resetHorizontalScroll, { passive: true });
     window.addEventListener("resize", resetHorizontalScroll);
+    document.addEventListener("touchstart", onTouchStart, { passive: true });
+    document.addEventListener("touchmove", onTouchMove, { passive: false });
+    document.addEventListener("touchend", onTouchEnd, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", resetHorizontalScroll);
       window.removeEventListener("resize", resetHorizontalScroll);
+      document.removeEventListener("touchstart", onTouchStart);
+      document.removeEventListener("touchmove", onTouchMove);
+      document.removeEventListener("touchend", onTouchEnd);
     };
   }, []);
 
@@ -505,7 +537,7 @@ export default function FixedHomePage() {
       </div>
       <div className={styles.tableScrollRegion}>
         <p className={styles.tableScrollHint}>{s.tableScrollHint}</p>
-        <div className={styles.tableWrap}>
+        <div className={styles.tableWrap} data-table-scroll="true">
           <table className={styles.pricingTable}>
             <thead>
               <tr>
@@ -602,7 +634,7 @@ export default function FixedHomePage() {
           </div>
       </section>
 
-      <section className={styles.section} id="about">
+      <section className={`${styles.section} ${styles.aboutSection}`} id="about">
         <div className={styles.container}>
           <div className={styles.aboutSplit}>
             <div className={styles.aboutCopy}>
@@ -738,7 +770,7 @@ export default function FixedHomePage() {
                 <p><strong>{s.interiorWindows}</strong> — {s.startingRate}: {interiorWindowPricing.rate} {s.perHour}</p>
                 <div className={styles.tableScrollRegion}>
                   <p className={styles.tableScrollHint}>{s.tableScrollHint}</p>
-                  <div className={styles.tableWrap}>
+                  <div className={styles.tableWrap} data-table-scroll="true">
                   <table className={styles.pricingTable}>
                     <thead>
                       <tr>
@@ -764,7 +796,7 @@ export default function FixedHomePage() {
                 <p><strong>{s.exteriorWindows}</strong> — {s.startingRate}: {exteriorWindowPricing.rate} {s.perHour}</p>
                 <div className={styles.tableScrollRegion}>
                   <p className={styles.tableScrollHint}>{s.tableScrollHint}</p>
-                  <div className={styles.tableWrap}>
+                  <div className={styles.tableWrap} data-table-scroll="true">
                   <table className={styles.pricingTable}>
                     <thead>
                       <tr>
@@ -795,7 +827,7 @@ export default function FixedHomePage() {
             </div>
             <div className={styles.tableScrollRegion}>
               <p className={styles.tableScrollHint}>{s.tableScrollHint}</p>
-              <div className={styles.tableWrap}>
+              <div className={styles.tableWrap} data-table-scroll="true">
               <table className={styles.pricingTable}>
                 <thead>
                   <tr>

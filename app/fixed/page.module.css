@@ -13,7 +13,6 @@
   min-width: 0;
   margin: 0;
   padding-inline: clamp(20px, 4vw, 64px);
-  overflow-x: hidden;
 }
 
 .section {
@@ -21,14 +20,12 @@
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  overflow-x: hidden;
 }
 
 .heroWrap {
   width: 100%;
   max-width: 100%;
   padding: 0;
-  overflow-x: hidden;
 }
 
 .header {
@@ -315,9 +312,13 @@
 }
 
 .sectionEyebrow {
+  color: #0c5660;
+}
+
+.centerIntro .sectionEyebrow,
+.splitHeading .sectionEyebrow {
   justify-content: center;
   width: 100%;
-  color: #0c5660;
 }
 
 .sectionEyebrow::before {
@@ -355,11 +356,24 @@
   line-height: 1.7;
 }
 
+.aboutSection {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
 .aboutSplit {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   gap: clamp(24px, 4vw, 48px);
   align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.aboutCopy {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .aboutCopy h2 {
@@ -367,6 +381,7 @@
   font-size: clamp(38px, 4vw, 58px);
   line-height: 1.06;
   letter-spacing: -0.06em;
+  overflow-wrap: anywhere;
 }
 
 .aboutCopy > p {
@@ -397,6 +412,8 @@
 
 .founderCard {
   margin: 0;
+  min-width: 0;
+  max-width: 100%;
   overflow: hidden;
   border-radius: 28px;
   background: rgba(255, 255, 255, 0.92);
@@ -406,6 +423,7 @@
 
 .founderCard img {
   width: 100%;
+  max-width: 100%;
   height: 420px;
   object-fit: cover;
   object-position: center top;
@@ -432,6 +450,8 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
   margin-top: 52px;
+  width: 100%;
+  min-width: 0;
 }
 
 .statCard,
@@ -1351,9 +1371,51 @@
     flex-shrink: 1;
   }
 
+  .aboutSection .container {
+    padding-inline: 16px;
+  }
+
+  .aboutSplit {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .aboutCopy h2 {
+    font-size: clamp(30px, 8.5vw, 40px);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .aboutCopy > p,
+  .missionVision p {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .founderCard img {
+    height: min(360px, 70vw);
+  }
+
+  .statsGrid {
+    margin-top: 28px;
+    gap: 14px;
+  }
+
+  .statCard {
+    min-height: auto;
+    padding: 20px;
+  }
+
+  .statCard strong {
+    font-size: clamp(28px, 8vw, 40px);
+  }
+
   .aboutCopy,
   .aboutCopy h2,
   .aboutCopy p,
+  .missionVision,
+  .missionVision h3,
+  .missionVision p,
   .centerIntro,
   .centerIntro h2,
   .centerIntro p,
