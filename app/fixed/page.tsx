@@ -1,36 +1,28 @@
 "use client";
 
-import type { FormEvent, MouseEvent, SyntheticEvent } from "react";
+import type { FormEvent, MouseEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
 
 type Language = "nl" | "en";
 type ServiceKey = "general" | "deep" | "window";
 
+const asset = (path: string) => `${path}?v=2`;
+
 const images = {
   hero:
     "https://cdn.pixabay.com/photo/2026/03/02/15/24/los-angeles-cs-commercial-cleaning-10152157_1280.jpg",
-  founder: "/king-prosper.jpg",
-  planning: "/Leader.PNG",
-  team: "/Cleaners1.PNG",
-  quality: "/king-slide-1.png",
-  offices: "/Cleaners1.PNG",
-  schools: "/Leader.PNG",
-  gyms: "/king-slide-1.png",
+  founder: asset("/king-prosper.jpg"),
+  planning: asset("/Leader.PNG"),
+  team: asset("/Cleaners1.PNG"),
+  quality: asset("/Leader.PNG"),
+  offices: asset("/Cleaners1.PNG"),
+  schools: asset("/Leader.PNG"),
+  gyms: asset("/king-prosper.jpg"),
   staircases:
     "https://cdn.pixabay.com/photo/2017/08/07/14/15/staircase-2596825_1280.jpg",
-  restaurants: "/king-prosper.jpg",
-  hotels: "/king-slide-2.png"
-};
-
-const fallbackImage = "/Cleaners1.PNG";
-
-const handleImageError = (event: SyntheticEvent<HTMLImageElement>) => {
-  const target = event.currentTarget;
-  if (target.dataset.fallbackApplied === "true") return;
-  target.dataset.fallbackApplied = "true";
-  if (target.src.includes(fallbackImage)) return;
-  target.src = fallbackImage;
+  restaurants: asset("/king-slide-2.png"),
+  hotels: asset("/king-slide-1.png")
 };
 
 const galleryFocus = ["center", "center", "center", "center 68%", "center 78%", "center"];
@@ -559,7 +551,7 @@ export default function FixedHomePage() {
           </header>
 
           <div className={styles.heroCard} id="home">
-            <img className={styles.heroImage} src={images.hero} alt="Professional commercial cleaning" onError={handleImageError} />
+            <img className={styles.heroImage} src={images.hero} alt="Professional commercial cleaning" />
             <div className={styles.heroShade} />
             <div className={styles.heroInner}>
               <div className={styles.heroLead}>
@@ -600,7 +592,7 @@ export default function FixedHomePage() {
               </div>
             </div>
             <figure className={styles.founderCard}>
-              <img src={images.founder} alt="King Prosper Asem" onError={handleImageError} />
+              <img src={images.founder} alt="King Prosper Asem" />
               <figcaption>
                 <strong>King Prosper Asem</strong>
                 <span>{t.about.founderTitle}</span>
@@ -635,7 +627,6 @@ export default function FixedHomePage() {
                   src={member.image}
                   alt={"alt" in member && member.alt ? member.alt : member.name}
                   loading="lazy"
-                  onError={handleImageError}
                 />
                 <div className={styles.teamMeta}>
                   <span>{member.role}</span>
