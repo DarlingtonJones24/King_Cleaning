@@ -14,13 +14,17 @@ const images = {
   planning: "/Leader.PNG",
   team: "/Cleaners1.PNG",
   quality: "/Leader.PNG",
-  offices: "/Cleaners1.PNG",
-  schools: "/Leader.PNG",
-  gyms: "/king-prosper.jpg",
+  offices:
+    "https://www.corporatecfm.com/wp-content/uploads/2023/01/Contemporary-young-black-man-in-workwear-cleaning-floor-in-openspace-office-in-front-of-yellow-plastic-signboard-with-caution.jpg",
+  schools: "https://clickcleaning.co.za/wp-content/uploads/2022/12/school5.jpg",
+  gyms:
+    "https://tse3.mm.bing.net/th/id/OIP.LvIKbpRl0nOWOh6_1rWMvAHaED?cb=thfvnextfalcon4&rs=1&pid=ImgDetMain&o=7&rm=3",
   staircases:
     "https://files.autoblogging.ai/images/how-to-clean-office-elevators-and-stairwells-best-practices-for-shared-office-buildings-in-london(dzyc).jpg_01.jpeg",
-  restaurants: "/Leader.PNG",
-  hotels: "/king-prosper.jpg"
+  restaurants:
+    "https://tse2.mm.bing.net/th/id/OIP.i5G9cZGMh-xCq83VRZNpSgHaE8?cb=thfvnextfalcon4&rs=1&pid=ImgDetMain&o=7&rm=3",
+  hotels:
+    "https://d3g2yh83to8qa2.cloudfront.net/wp-content/uploads/sites/50/2016/04/20071335/MG_1851-990x590.jpg"
 };
 
 const galleryFocus = ["center", "center", "center", "center 68%", "center 78%", "center"];
@@ -85,17 +89,17 @@ const content = {
       items: [
         {
           label: "Kantoren",
-          alt: "Professioneel schoonmaakteam in een kantoor",
+          alt: "Schoonmaker reinigt de vloer in een kantoor",
           image: images.offices
         },
         {
           label: "Scholen",
-          alt: "Professionele samenwerking en planning",
+          alt: "Professionele schoonmaak in een school",
           image: images.schools
         },
         {
           label: "Sportscholen",
-          alt: "Schoonmaakteam in commerciele ruimte",
+          alt: "Schone fitnessruimte na professionele schoonmaak",
           image: images.gyms
         },
         {
@@ -105,12 +109,12 @@ const content = {
         },
         {
           label: "Restaurants",
-          alt: "Professionele samenwerking met klanten",
+          alt: "Nette restaurantomgeving na schoonmaak",
           image: images.restaurants
         },
         {
           label: "Hotels",
-          alt: "King Prosper, King Cleaning",
+          alt: "Verzorgde hotelkamer na professionele schoonmaak",
           image: images.hotels
         }
       ]
@@ -219,17 +223,17 @@ const content = {
       items: [
         {
           label: "Offices",
-          alt: "Professional cleaning team in a commercial office",
+          alt: "Cleaner cleaning the floor in an open-plan office",
           image: images.offices
         },
         {
           label: "Schools",
-          alt: "Professional partnership and planning",
+          alt: "Professional cleaning in a school",
           image: images.schools
         },
         {
           label: "Gyms",
-          alt: "King Prosper, founder of King Cleaning",
+          alt: "Spotless gym after professional cleaning",
           image: images.gyms
         },
         {
@@ -239,12 +243,12 @@ const content = {
         },
         {
           label: "Restaurants",
-          alt: "Professional client partnership",
+          alt: "Tidy restaurant after professional cleaning",
           image: images.restaurants
         },
         {
           label: "Hotels",
-          alt: "King Prosper, King Cleaning",
+          alt: "Well-kept hotel room after professional cleaning",
           image: images.hotels
         }
       ]
