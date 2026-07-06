@@ -437,13 +437,25 @@ export default function FixedHomePage() {
   };
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
+    const mobileQuery = window.matchMedia("(max-width: 820px)");
+    const syncMenuState = () => {
+      if (!mobileQuery.matches) {
+        setMenuOpen(false);
+      }
+    };
+
+    syncMenuState();
+    document.body.style.overflow = menuOpen && mobileQuery.matches ? "hidden" : "";
+
+    mobileQuery.addEventListener("change", syncMenuState);
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setMenuOpen(false);
     };
     window.addEventListener("keydown", onKeyDown);
+
     return () => {
       document.body.style.overflow = "";
+      mobileQuery.removeEventListener("change", syncMenuState);
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [menuOpen]);
@@ -520,7 +532,7 @@ export default function FixedHomePage() {
       <section className={styles.heroWrap}>
           <header className={`${styles.header} ${menuOpen ? styles.headerMenuOpen : ""}`}>
             <a className={styles.brand} href="#home" onClick={(event) => navigateToSection(event, "home")}>
-              <img className={styles.brandLogo} src="/King-Logo.png" alt="King Cleaning B.V" />
+              <img className={styles.brandLogo} src="/King-Logo.png" alt="King Cleaning B.V" width={220} height={64} />
             </a>
             <nav className={styles.nav} aria-label="Main navigation">
               <a href="#home" onClick={(event) => navigateToSection(event, "home")}>{t.nav.home}</a>
