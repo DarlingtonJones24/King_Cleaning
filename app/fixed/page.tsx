@@ -7,22 +7,26 @@ import styles from "./page.module.css";
 type Language = "nl" | "en";
 type ServiceKey = "general" | "deep" | "window";
 
-const asset = (path: string) => `${path}?v=2`;
-
 const images = {
   hero:
     "https://cdn.pixabay.com/photo/2026/03/02/15/24/los-angeles-cs-commercial-cleaning-10152157_1280.jpg",
-  founder: asset("/king-prosper.jpg"),
-  planning: asset("/Leader.PNG"),
-  team: asset("/Cleaners1.PNG"),
-  quality: asset("/Leader.PNG"),
-  offices: asset("/Cleaners1.PNG"),
-  schools: asset("/Leader.PNG"),
-  gyms: asset("/king-prosper.jpg"),
+  founder: "/king-prosper.jpg",
+  planning: "/Leader.PNG",
+  team: "/Cleaners1.PNG",
+  quality:
+    "https://cdn.pixabay.com/photo/2016/03/27/21/02/cleaning-1283943_1280.jpg",
+  offices:
+    "https://cdn.pixabay.com/photo/2020/09/04/06/19/cleaning-5546204_1280.jpg",
+  schools:
+    "https://cdn.pixabay.com/photo/2017/07/06/23/04/classroom-2477803_1280.jpg",
+  gyms:
+    "https://cdn.pixabay.com/photo/2020/04/06/13/37/exercise-5006768_1280.jpg",
   staircases:
-    "https://cdn.pixabay.com/photo/2017/08/07/14/15/staircase-2596825_1280.jpg",
-  restaurants: asset("/king-slide-2.png"),
-  hotels: asset("/king-slide-1.png")
+    "https://files.autoblogging.ai/images/how-to-clean-office-elevators-and-stairwells-best-practices-for-shared-office-buildings-in-london(dzyc).jpg_01.jpeg",
+  restaurants:
+    "https://cdn.pixabay.com/photo/2017/08/11/07/53/restaurant-2629785_1280.jpg",
+  hotels:
+    "https://cdn.pixabay.com/photo/2016/08/05/08/27/hotel-1579355_1280.jpg"
 };
 
 const galleryFocus = ["center", "center", "center", "center 68%", "center 78%", "center"];
@@ -77,7 +81,7 @@ const content = {
       cards: [
         { name: "Directie & planning", role: "Onder leiding van King Prosper Asem", image: images.planning },
         { name: "Vaste lokale schoonmaakteams", role: "Algemene en specialistische schoonmaak", image: images.team },
-        { name: "Kwaliteit & communicatie", role: "Rapportages, logboeken en opvolging", image: images.quality, alt: "Professionele bespreking van rapporten en opvolging" }
+        { name: "Kwaliteit & communicatie", role: "Rapportages, logboeken en opvolging", image: images.quality, alt: "Professionele schoonmaker met schoonmaakmaterialen" }
       ]
     },
     gallery: {
@@ -211,7 +215,7 @@ const content = {
       cards: [
         { name: "Director & Planning", role: "Led by King Prosper Asem", image: images.planning },
         { name: "Fixed Local Cleaning Teams", role: "General & specialist cleaning", image: images.team },
-        { name: "Quality & Communication", role: "Reports, logbooks & follow-up", image: images.quality, alt: "Professional review of reports and follow-up" },
+        { name: "Quality & Communication", role: "Reports, logbooks & follow-up", image: images.quality, alt: "Professional cleaner with cleaning equipment" },
       ]
     },
     gallery: {
