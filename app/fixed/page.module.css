@@ -25,6 +25,7 @@
   display: inline-flex;
   align-items: center;
   gap: 14px;
+  flex-shrink: 0;
 }
 
 .brand {
@@ -81,6 +82,7 @@
 .languageToggle {
   display: inline-flex;
   align-items: center;
+  flex-shrink: 0;
   padding: 4px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.72);
@@ -151,11 +153,13 @@
   border-radius: 999px;
   background: #ffffff;
   color: #0c5660;
+  font-size: 18px;
+  line-height: 1;
 }
 
 .heroCard {
   position: relative;
-  min-height: calc(100vh - 112px);
+  min-height: clamp(520px, 72vh, 680px);
   overflow: hidden;
   border-radius: 34px;
   box-shadow: 0 30px 80px rgba(16, 39, 44, 0.18);
@@ -184,11 +188,31 @@
   position: relative;
   z-index: 1;
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 36px;
-  min-height: calc(100vh - 112px);
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 28px;
+  min-height: clamp(520px, 72vh, 680px);
   padding: clamp(28px, 4vw, 52px);
+}
+
+.scrollHint {
+  align-self: center;
+  margin-top: auto;
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scrollHint::after {
+  content: "↓";
+  display: block;
+  margin-top: 8px;
+  text-align: center;
+  font-size: 18px;
 }
 
 .heroLead {
@@ -316,9 +340,81 @@
   line-height: 1.7;
 }
 
+.aboutSplit {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+}
+
+.aboutCopy h2 {
+  margin: 18px 0 0;
+  font-size: clamp(38px, 4vw, 58px);
+  line-height: 1.06;
+  letter-spacing: -0.06em;
+}
+
+.aboutCopy > p {
+  margin: 18px 0 0;
+  max-width: 720px;
+  color: rgba(16, 39, 44, 0.68);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.missionVision {
+  display: grid;
+  gap: 22px;
+  margin-top: 28px;
+}
+
+.missionVision h3 {
+  margin: 0 0 8px;
+  font-size: 22px;
+  letter-spacing: -0.03em;
+}
+
+.missionVision p {
+  margin: 0;
+  color: rgba(16, 39, 44, 0.68);
+  line-height: 1.7;
+}
+
+.founderCard {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(12, 86, 96, 0.08);
+  box-shadow: 0 18px 40px rgba(16, 39, 44, 0.08);
+}
+
+.founderCard img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.founderCard figcaption {
+  display: grid;
+  gap: 6px;
+  padding: 22px 24px 26px;
+}
+
+.founderCard strong {
+  font-size: 24px;
+  letter-spacing: -0.04em;
+}
+
+.founderCard span {
+  color: rgba(16, 39, 44, 0.62);
+  font-size: 15px;
+}
+
 .statsGrid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
   margin-top: 52px;
 }
@@ -648,17 +744,208 @@
   box-shadow: 0 16px 34px rgba(16, 39, 44, 0.1);
 }
 
-.contactPanel {
+.processHeading {
+  max-width: 820px;
+}
+
+.processHeading h2 {
+  margin: 18px 0 0;
+  font-size: clamp(38px, 4vw, 66px);
+  line-height: 1.06;
+  letter-spacing: -0.06em;
+}
+
+.processHeading p {
+  margin: 18px 0 0;
+  max-width: 720px;
+  color: rgba(16, 39, 44, 0.68);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.serviceSelector,
+.pricingBlock {
+  margin-top: 34px;
+  padding: clamp(24px, 3vw, 34px);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(12, 86, 96, 0.08);
+  box-shadow: 0 18px 40px rgba(16, 39, 44, 0.08);
+}
+
+.selectorIntro h3,
+.pricingHeader h3 {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 38px);
+  letter-spacing: -0.05em;
+}
+
+.selectorIntro p,
+.pricingHeader p {
+  margin: 10px 0 0;
+  color: rgba(16, 39, 44, 0.68);
+  line-height: 1.6;
+}
+
+.serviceOptions {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  align-items: start;
-  gap: clamp(28px, 4vw, 56px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.serviceOption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 0 18px;
+  border: 1px solid rgba(12, 86, 96, 0.12);
+  border-radius: 18px;
+  background: #ffffff;
+  color: #0c5660;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+}
+
+.serviceOptionActive {
+  background: #0c5660;
+  border-color: #0c5660;
+  color: #ffffff;
+}
+
+.serviceOptionCheck {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(12, 86, 96, 0.1);
+  font-size: 16px;
+}
+
+.serviceOptionActive .serviceOptionCheck {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.selectionSummary,
+.formSummary {
+  margin-top: 18px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(12, 86, 96, 0.06);
+}
+
+.selectionSummary strong,
+.formSummary strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.selectionSummary p,
+.formSummary p {
+  margin: 0;
+  color: rgba(16, 39, 44, 0.72);
+  line-height: 1.6;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  margin-top: 18px;
+}
+
+.pricingTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.pricingTable th,
+.pricingTable td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(12, 86, 96, 0.1);
+  text-align: left;
+  vertical-align: top;
+}
+
+.pricingTable th {
+  color: #0c5660;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.includesList {
+  margin-top: 18px;
+}
+
+.includesList ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: rgba(16, 39, 44, 0.72);
+  line-height: 1.7;
+}
+
+.windowPricingGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.contactPanel {
   margin-top: 22px;
   padding: clamp(30px, 4vw, 52px);
   border-radius: 32px;
   background: #0d5059;
   color: #ffffff;
   box-shadow: 0 24px 52px rgba(13, 80, 89, 0.26);
+}
+
+.siteFooter {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  margin-top: 28px;
+  padding: 28px 8px 0;
+}
+
+.siteFooter span {
+  display: inline-block;
+  color: rgba(16, 39, 44, 0.56);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.siteFooter a,
+.siteFooter p {
+  display: block;
+  margin: 14px 0 0;
+  color: rgba(16, 39, 44, 0.82);
+  text-decoration: none;
+  line-height: 1.7;
+}
+
+.copyright {
+  margin: 24px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(12, 86, 96, 0.1);
+  color: rgba(16, 39, 44, 0.52);
+  font-size: 14px;
+  text-align: center;
+}
+
+.buildMarker {
+  margin: 10px 0 0;
+  color: #0c5660;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .contactLead {
@@ -685,7 +972,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
-  margin-top: 24px;
+  margin-top: 0;
 }
 
 .contactForm label {
@@ -715,8 +1002,17 @@
 }
 
 .contactForm label:has(textarea),
+.contactForm .formSummary,
 .contactForm button {
   grid-column: 1 / -1;
+}
+
+.formSummary {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.formSummary p {
+  color: rgba(255, 255, 255, 0.76);
 }
 
 .contactForm textarea {
@@ -914,25 +1210,28 @@
   }
 }
 
+.contactForm .primaryAction:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
 @media (max-width: 1180px) {
+  .aboutSplit,
+  .windowPricingGrid,
+  .serviceOptions,
+  .siteFooter {
+    grid-template-columns: 1fr;
+  }
+
   .heroInner,
   .splitHeading {
     flex-direction: column;
   }
 
-  .contactPanel {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
-
-  .contactLinks {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-self: stretch;
-  }
-
   .heroCard,
   .heroInner {
-    min-height: 760px;
+    min-height: 560px;
   }
 
   .statsGrid {
@@ -947,11 +1246,6 @@
   .planGrid,
   .teamGrid {
     grid-template-columns: 1fr;
-  }
-
-  .contactLinks {
-    grid-template-columns: 1fr;
-    gap: 28px;
   }
 
   .contactForm {
@@ -1010,12 +1304,12 @@
   }
 
   .heroCard {
-    min-height: 620px;
+    min-height: 480px;
     border-radius: 24px;
   }
 
   .heroInner {
-    min-height: 620px;
+    min-height: 480px;
     align-items: flex-end;
     padding: 24px 18px;
   }
@@ -1124,6 +1418,6 @@
 
   .heroCard,
   .heroInner {
-    min-height: 560px;
+    min-height: 440px;
   }
 }
