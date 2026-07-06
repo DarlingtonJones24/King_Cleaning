@@ -56,16 +56,16 @@
 }
 
 .brandLogo {
-  width: 46px;
-  height: 46px;
-  max-width: 46px;
-  max-height: 46px;
+  width: auto;
+  height: 52px;
+  max-width: min(220px, 42vw);
+  max-height: 52px;
   display: block;
-  flex: 0 0 46px;
-  border-radius: 999px;
+  flex: 0 0 auto;
+  border-radius: 0;
   object-fit: contain;
-  background: #07101b;
-  box-shadow: 0 10px 22px rgba(16, 39, 44, 0.16);
+  background: transparent;
+  box-shadow: none;
 }
 
 .nav {
@@ -1303,11 +1303,9 @@
   }
 
   .brandLogo {
-    width: 40px;
-    height: 40px;
-    max-width: 40px;
-    max-height: 40px;
-    flex-basis: 40px;
+    height: 44px;
+    max-width: min(180px, 52vw);
+    max-height: 44px;
   }
 
   .nav,
