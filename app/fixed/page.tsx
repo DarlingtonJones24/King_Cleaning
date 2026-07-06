@@ -22,7 +22,7 @@ const images = {
   gyms:
     "https://cdn.pixabay.com/photo/2020/04/06/13/37/exercise-5006768_1280.jpg",
   staircases:
-    "https://files.autoblogging.ai/images/how-to-clean-office-elevators-and-stairwells-best-practices-for-shared-office-buildings-in-london(dzyc).jpg_01.jpeg",
+    "https://cdn.pixabay.com/photo/2017/08/07/14/15/staircase-2596825_1280.jpg",
   restaurants:
     "https://cdn.pixabay.com/photo/2017/08/11/07/53/restaurant-2629785_1280.jpg",
   hotels:
