@@ -1,6 +1,6 @@
 "use client";
 
-import type { FormEvent, MouseEvent } from "react";
+import type { FormEvent, MouseEvent, SyntheticEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
 
@@ -9,23 +9,31 @@ type ServiceKey = "general" | "deep" | "window";
 
 const images = {
   hero:
-    "https://cdn.pixabay.com/photo/2026/03/02/15/24/los-angeles-cs-commercial-cleaning-10152157_1280.jpg",
-  founder: "/Leader.PNG",
+    "https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=1600",
+  founder: "/king-prosper.jpg",
   team: "/Cleaners1.PNG",
   quality:
-    "https://cdn.pixabay.com/photo/2016/03/27/21/02/cleaning-1283943_1280.jpg",
+    "https://images.pexels.com/photos/6195126/pexels-photo-6195126.jpeg?auto=compress&cs=tinysrgb&w=1200",
   offices:
-    "https://cdn.pixabay.com/photo/2020/09/04/06/19/cleaning-5546204_1280.jpg",
+    "https://images.pexels.com/photos/6195126/pexels-photo-6195126.jpeg?auto=compress&cs=tinysrgb&w=1200",
   schools:
-    "https://cdn.pixabay.com/photo/2017/07/06/23/04/classroom-2477803_1280.jpg",
+    "https://images.pexels.com/photos/256395/pexels-photo-256395.jpeg?auto=compress&cs=tinysrgb&w=1200",
   gyms:
-    "https://cdn.pixabay.com/photo/2020/04/06/13/37/exercise-5006768_1280.jpg",
+    "https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=1200",
   staircases:
-    "https://cdn.pixabay.com/photo/2017/08/07/14/15/staircase-2596825_1280.jpg",
+    "https://images.pexels.com/photos/681331/pexels-photo-681331.jpeg?auto=compress&cs=tinysrgb&w=1200",
   restaurants:
-    "https://cdn.pixabay.com/photo/2017/08/11/07/53/restaurant-2629785_1280.jpg",
+    "https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=1200",
   hotels:
-    "https://cdn.pixabay.com/photo/2016/08/05/08/27/hotel-1579355_1280.jpg"
+    "https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=1200"
+};
+
+const fallbackImage = "/Cleaners1.PNG";
+
+const handleImageError = (event: SyntheticEvent<HTMLImageElement>) => {
+  const target = event.currentTarget;
+  if (target.src.includes(fallbackImage)) return;
+  target.src = fallbackImage;
 };
 
 const galleryFocus = ["center", "center", "center", "center 68%", "center 78%", "center"];
@@ -554,7 +562,7 @@ export default function FixedHomePage() {
           </header>
 
           <div className={styles.heroCard} id="home">
-            <img className={styles.heroImage} src={images.hero} alt="Professional commercial cleaning" />
+            <img className={styles.heroImage} src={images.hero} alt="Professional commercial cleaning" onError={handleImageError} />
             <div className={styles.heroShade} />
             <div className={styles.heroInner}>
               <div className={styles.heroLead}>
@@ -595,7 +603,7 @@ export default function FixedHomePage() {
               </div>
             </div>
             <figure className={styles.founderCard}>
-              <img src={images.founder} alt="King Prosper Asem" />
+              <img src={images.founder} alt="King Prosper Asem" onError={handleImageError} />
               <figcaption>
                 <strong>King Prosper Asem</strong>
                 <span>{t.about.founderTitle}</span>
@@ -630,6 +638,7 @@ export default function FixedHomePage() {
                   src={member.image}
                   alt={"alt" in member && member.alt ? member.alt : member.name}
                   loading="lazy"
+                  onError={handleImageError}
                 />
                 <div className={styles.teamMeta}>
                   <span>{member.role}</span>
@@ -655,6 +664,7 @@ export default function FixedHomePage() {
                   src={item.image}
                   alt={"alt" in item && item.alt ? item.alt : `${item.label} cleaning service`}
                   loading="lazy"
+                  onError={handleImageError}
                   style={{ objectPosition: galleryFocus[index] ?? "center" }}
                 />
                 <span>{item.label}</span>
