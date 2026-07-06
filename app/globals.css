@@ -12,6 +12,13 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 html {
   background:
     radial-gradient(circle at top left, rgba(151, 214, 208, 0.28), transparent 28%),

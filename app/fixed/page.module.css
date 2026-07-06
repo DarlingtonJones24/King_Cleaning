@@ -7,21 +7,14 @@
 
 .container {
   width: 100%;
-  max-width: 100%;
+  max-width: none;
   margin: 0;
-  padding-inline: clamp(16px, 3vw, 48px);
+  padding-inline: clamp(20px, 4vw, 64px);
 }
 
 .heroWrap {
+  width: 100%;
   padding: 0;
-}
-
-.heroWrap .container {
-  padding-inline: 0;
-}
-
-.heroWrap .header {
-  padding-inline: clamp(16px, 3vw, 48px);
 }
 
 .header {
@@ -29,7 +22,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 8px 12px 18px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px clamp(20px, 4vw, 64px) 18px;
 }
 
 .headerActions {
@@ -170,6 +165,7 @@
 
 .heroCard {
   position: relative;
+  width: 100%;
   min-height: clamp(520px, 72vh, 680px);
   overflow: hidden;
   border-radius: 0;
@@ -1280,10 +1276,6 @@
 
   .container {
     padding-inline: 16px;
-  }
-
-  .heroWrap .container {
-    padding-inline: 0;
   }
 
   .header {

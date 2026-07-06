@@ -518,7 +518,6 @@ export default function FixedHomePage() {
       }}
     >
       <section className={styles.heroWrap}>
-        <div className={styles.container}>
           <header className={`${styles.header} ${menuOpen ? styles.headerMenuOpen : ""}`}>
             <a className={styles.brand} href="#home" onClick={(event) => navigateToSection(event, "home")}>
               <img className={styles.brandLogo} src="/king-cleaning-logo.svg" alt="King Cleaning B.V logo" />
@@ -573,7 +572,6 @@ export default function FixedHomePage() {
               </a>
             </div>
           </div>
-        </div>
       </section>
 
       <section className={styles.section} id="about">
