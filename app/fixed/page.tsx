@@ -7,41 +7,25 @@ import styles from "./page.module.css";
 type Language = "nl" | "en";
 type ServiceKey = "general" | "deep" | "window";
 
-const galleryImage = (id: string) =>
-  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=900&h=675&fit=crop`;
-
-const galleryImageExternal = (url: string) =>
-  `${url}${url.includes("?") ? "&" : "?"}w=900&h=675&fit=crop`;
-
 const images = {
   hero:
     "https://cdn.pixabay.com/photo/2026/03/02/15/24/los-angeles-cs-commercial-cleaning-10152157_1280.jpg",
   founder: "/Leader.PNG",
   team: "/Cleaners1.PNG",
-  quality: galleryImageExternal(
-    "https://cdn.pixabay.com/photo/2016/03/27/21/02/cleaning-1283943_1280.jpg"
-  ),
-  offices: galleryImageExternal(
-    "https://cdn.pixabay.com/photo/2020/09/04/06/19/cleaning-5546204_1280.jpg"
-  ),
-  schools: galleryImageExternal(
-    "https://cdn.pixabay.com/photo/2017/07/06/23/04/classroom-2477803_1280.jpg"
-  ),
-  gyms: galleryImageExternal(
-    "https://cdn.pixabay.com/photo/2020/04/06/13/37/exercise-5006768_1280.jpg"
-  ),
-  staircases: galleryImageExternal(
-    "https://cdn.pixabay.com/photo/2017/08/07/14/15/staircase-2596825_1280.jpg"
-  ),
-  restaurants: galleryImageExternal(
-    "https://cdn.pixabay.com/photo/2017/08/11/07/53/restaurant-2629785_1280.jpg"
-  ),
-  hotels: galleryImageExternal(
+  quality:
+    "https://cdn.pixabay.com/photo/2016/03/27/21/02/cleaning-1283943_1280.jpg",
+  offices:
+    "https://cdn.pixabay.com/photo/2020/09/04/06/19/cleaning-5546204_1280.jpg",
+  schools:
+    "https://cdn.pixabay.com/photo/2017/07/06/23/04/classroom-2477803_1280.jpg",
+  gyms:
+    "https://cdn.pixabay.com/photo/2020/04/06/13/37/exercise-5006768_1280.jpg",
+  staircases:
+    "https://cdn.pixabay.com/photo/2017/08/07/14/15/staircase-2596825_1280.jpg",
+  restaurants:
+    "https://cdn.pixabay.com/photo/2017/08/11/07/53/restaurant-2629785_1280.jpg",
+  hotels:
     "https://cdn.pixabay.com/photo/2016/08/05/08/27/hotel-1579355_1280.jpg"
-  ),
-  windows: galleryImageExternal(
-    "https://cdn.pixabay.com/photo/2015/07/31/12/14/cleaning-869286_1280.jpg"
-  )
 };
 
 const galleryFocus = ["center", "center", "center", "center 68%", "center 78%", "center"];
