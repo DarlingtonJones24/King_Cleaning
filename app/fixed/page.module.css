@@ -975,6 +975,23 @@
   line-height: 1.6;
 }
 
+.pricingResults {
+  width: 100%;
+  min-width: 0;
+}
+
+.pricingPrompt {
+  margin-top: 28px;
+  padding: 22px 20px;
+  border-radius: 18px;
+  background: rgba(12, 86, 96, 0.06);
+  border: 1px dashed rgba(12, 86, 96, 0.18);
+  color: rgba(16, 39, 44, 0.68);
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: center;
+}
+
 .tableScrollRegion {
   display: grid;
   grid-template-columns: minmax(0, 1fr);

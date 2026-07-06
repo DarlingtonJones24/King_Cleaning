@@ -113,6 +113,7 @@ const content = {
       selectorHint: "Kies een of meerdere diensten. Uw selectie wordt meegestuurd met de aanvraag.",
       summaryTitle: "Geselecteerde diensten",
       summaryEmpty: "Nog geen diensten geselecteerd.",
+      pricingPrompt: "Selecteer hierboven een of meerdere diensten om de bijbehorende tarieven te bekijken.",
       options: {
         general: "Algemene schoonmaak",
         deep: "Dieptereiniging",
@@ -241,6 +242,7 @@ const content = {
       selectorHint: "Choose one or more services. Your selection is included with your request.",
       summaryTitle: "Selected services",
       summaryEmpty: "No services selected yet.",
+      pricingPrompt: "Select one or more services above to view the matching rates and details.",
       options: {
         general: "General Cleaning",
         deep: "Deep Cleaning",
@@ -736,97 +738,110 @@ export default function FixedHomePage() {
             </div>
           </div>
 
-          {renderPricingTable(s.options.general, generalPricing.rate, generalPricing.rows, generalPricing.includes)}
-          {renderPricingTable(s.options.deep, deepPricing.rate, deepPricing.rows, deepPricing.includes)}
+          <div className={styles.pricingResults}>
+            {selectedServices.length === 0 ? (
+              <p className={styles.pricingPrompt}>{s.pricingPrompt}</p>
+            ) : (
+              <>
+                {selectedServices.includes("general") &&
+                  renderPricingTable(s.options.general, generalPricing.rate, generalPricing.rows, generalPricing.includes)}
 
-          <article className={styles.pricingBlock}>
-            <div className={styles.pricingHeader}>
-              <h3>{s.options.window}</h3>
-            </div>
-            <div className={styles.windowPricingGrid}>
-              <div>
-                <p><strong>{s.interiorWindows}</strong> — {s.startingRate}: {interiorWindowPricing.rate} {s.perHour}</p>
-                <div className={styles.tableScrollRegion}>
-                  <p className={styles.tableScrollHint}>{s.tableScrollHint}</p>
-                  <div className={styles.tableWrap} data-table-scroll="true">
-                  <table className={styles.pricingTable}>
-                    <thead>
-                      <tr>
-                        <th>{s.buildingSize}</th>
-                        <th>{s.time}</th>
-                        <th>{s.startingPrice}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {interiorWindowPricing.rows.map((row, rowIndex) => (
-                        <tr key={`interior-${rowIndex}`}>
-                          {row.map((cell, cellIndex) => (
-                            <td key={`interior-${rowIndex}-${cellIndex}`}>{cell}</td>
-                          ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <p><strong>{s.exteriorWindows}</strong> — {s.startingRate}: {exteriorWindowPricing.rate} {s.perHour}</p>
-                <div className={styles.tableScrollRegion}>
-                  <p className={styles.tableScrollHint}>{s.tableScrollHint}</p>
-                  <div className={styles.tableWrap} data-table-scroll="true">
-                  <table className={styles.pricingTable}>
-                    <thead>
-                      <tr>
-                        <th>{s.buildingSize}</th>
-                        <th>{s.time}</th>
-                        <th>{s.startingPrice}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {exteriorWindowPricing.rows.map((row, rowIndex) => (
-                        <tr key={`exterior-${rowIndex}`}>
-                          {row.map((cell, cellIndex) => (
-                            <td key={`exterior-${rowIndex}-${cellIndex}`}>{cell}</td>
-                          ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
+                {selectedServices.includes("deep") &&
+                  renderPricingTable(s.options.deep, deepPricing.rate, deepPricing.rows, deepPricing.includes)}
 
-          <article className={styles.pricingBlock}>
-            <div className={styles.pricingHeader}>
-              <h3>{s.additionalCharges}</h3>
-            </div>
-            <div className={styles.tableScrollRegion}>
-              <p className={styles.tableScrollHint}>{s.tableScrollHint}</p>
-              <div className={styles.tableWrap} data-table-scroll="true">
-              <table className={styles.pricingTable}>
-                <thead>
-                  <tr>
-                    <th>{s.service}</th>
-                    <th>{s.requirement}</th>
-                    <th>{s.charge}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {additionalCharges.map(([service, requirement, charge]) => (
-                    <tr key={service}>
-                      <td>{service}</td>
-                      <td>{requirement}</td>
-                      <td>{charge}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              </div>
-            </div>
-          </article>
+                {selectedServices.includes("window") && (
+                  <article className={styles.pricingBlock}>
+                    <div className={styles.pricingHeader}>
+                      <h3>{s.options.window}</h3>
+                    </div>
+                    <div className={styles.windowPricingGrid}>
+                      <div>
+                        <p><strong>{s.interiorWindows}</strong> — {s.startingRate}: {interiorWindowPricing.rate} {s.perHour}</p>
+                        <div className={styles.tableScrollRegion}>
+                          <p className={styles.tableScrollHint}>{s.tableScrollHint}</p>
+                          <div className={styles.tableWrap} data-table-scroll="true">
+                            <table className={styles.pricingTable}>
+                              <thead>
+                                <tr>
+                                  <th>{s.buildingSize}</th>
+                                  <th>{s.time}</th>
+                                  <th>{s.startingPrice}</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {interiorWindowPricing.rows.map((row, rowIndex) => (
+                                  <tr key={`interior-${rowIndex}`}>
+                                    {row.map((cell, cellIndex) => (
+                                      <td key={`interior-${rowIndex}-${cellIndex}`}>{cell}</td>
+                                    ))}
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <p><strong>{s.exteriorWindows}</strong> — {s.startingRate}: {exteriorWindowPricing.rate} {s.perHour}</p>
+                        <div className={styles.tableScrollRegion}>
+                          <p className={styles.tableScrollHint}>{s.tableScrollHint}</p>
+                          <div className={styles.tableWrap} data-table-scroll="true">
+                            <table className={styles.pricingTable}>
+                              <thead>
+                                <tr>
+                                  <th>{s.buildingSize}</th>
+                                  <th>{s.time}</th>
+                                  <th>{s.startingPrice}</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {exteriorWindowPricing.rows.map((row, rowIndex) => (
+                                  <tr key={`exterior-${rowIndex}`}>
+                                    {row.map((cell, cellIndex) => (
+                                      <td key={`exterior-${rowIndex}-${cellIndex}`}>{cell}</td>
+                                    ))}
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                )}
+
+                <article className={styles.pricingBlock}>
+                  <div className={styles.pricingHeader}>
+                    <h3>{s.additionalCharges}</h3>
+                  </div>
+                  <div className={styles.tableScrollRegion}>
+                    <p className={styles.tableScrollHint}>{s.tableScrollHint}</p>
+                    <div className={styles.tableWrap} data-table-scroll="true">
+                      <table className={styles.pricingTable}>
+                        <thead>
+                          <tr>
+                            <th>{s.service}</th>
+                            <th>{s.requirement}</th>
+                            <th>{s.charge}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {additionalCharges.map(([service, requirement, charge]) => (
+                            <tr key={service}>
+                              <td>{service}</td>
+                              <td>{requirement}</td>
+                              <td>{charge}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </article>
+              </>
+            )}
+          </div>
         </div>
       </section>
 
