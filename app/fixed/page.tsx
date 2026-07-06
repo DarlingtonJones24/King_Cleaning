@@ -13,7 +13,7 @@ const images = {
   founder: "/king-prosper.jpg",
   planning: "/Leader.PNG",
   team: "/Cleaners1.PNG",
-  quality: "/Leader.PNG",
+  quality: "/quality%20and%20communication.jpg",
   offices: "/offices.jpg",
   schools: "/schools.jpg",
   gyms: "/gyms.webp",
