@@ -6,22 +6,20 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outDir = path.join(root, "public", "gallery");
 
 const images = {
-  offices:
-    "https://images.pexels.com/photos/6195126/pexels-photo-6195126.jpeg?auto=compress&cs=tinysrgb&w=1200",
-  schools:
-    "https://images.pexels.com/photos/256395/pexels-photo-256395.jpeg?auto=compress&cs=tinysrgb&w=1200",
-  gyms:
-    "https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=1200",
-  staircases:
-    "https://images.pexels.com/photos/681331/pexels-photo-681331.jpeg?auto=compress&cs=tinysrgb&w=1200",
-  restaurants:
-    "https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=1200",
-  hotels:
-    "https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=1200",
   quality:
-    "https://images.pexels.com/photos/4107112/pexels-photo-4107112.jpeg?auto=compress&cs=tinysrgb&w=1200",
-  hero:
-    "https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=1600"
+    "https://cdn.pixabay.com/photo/2017/07/29/22/20/clipboard-863418_1280.jpg",
+  staircases:
+    "https://cdn.pixabay.com/photo/2017/08/07/14/15/staircase-2596825_1280.jpg",
+  offices:
+    "https://cdn.pixabay.com/photo/2020/09/04/06/19/cleaning-5546204_1280.jpg",
+  schools:
+    "https://cdn.pixabay.com/photo/2017/07/06/23/04/classroom-2477803_1280.jpg",
+  gyms:
+    "https://cdn.pixabay.com/photo/2020/04/06/13/37/exercise-5006768_1280.jpg",
+  restaurants:
+    "https://cdn.pixabay.com/photo/2017/08/11/07/53/restaurant-2629785_1280.jpg",
+  hotels:
+    "https://cdn.pixabay.com/photo/2016/08/05/08/27/hotel-1579355_1280.jpg"
 };
 
 await mkdir(outDir, { recursive: true });
