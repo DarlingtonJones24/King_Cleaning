@@ -19,16 +19,29 @@ const images = {
   founder: "/Leader.PNG",
   team: "/Cleaners1.PNG",
   quality: galleryImageExternal(
-    "https://cdn.pixabay.com/photo/2017/09/13/09/20/cleaning-2745832_1280.jpg"
+    "https://cdn.pixabay.com/photo/2016/03/27/21/02/cleaning-1283943_1280.jpg"
   ),
-  offices: galleryImage("33728673"),
-  schools: galleryImage("4484078"),
+  offices: galleryImageExternal(
+    "https://cdn.pixabay.com/photo/2020/09/04/06/19/cleaning-5546204_1280.jpg"
+  ),
+  schools: galleryImageExternal(
+    "https://cdn.pixabay.com/photo/2017/07/06/23/04/classroom-2477803_1280.jpg"
+  ),
   gyms: galleryImageExternal(
-    "https://cdn.pixabay.com/photo/2026/03/02/15/24/los-angeles-cs-commercial-cleaning-10152157_1280.jpg"
+    "https://cdn.pixabay.com/photo/2020/04/06/13/37/exercise-5006768_1280.jpg"
   ),
-  staircases: galleryImage("4107112"),
-  restaurants: galleryImage("8440062"),
-  hotels: galleryImage("4239091")
+  staircases: galleryImageExternal(
+    "https://cdn.pixabay.com/photo/2017/08/07/14/15/staircase-2596825_1280.jpg"
+  ),
+  restaurants: galleryImageExternal(
+    "https://cdn.pixabay.com/photo/2017/08/11/07/53/restaurant-2629785_1280.jpg"
+  ),
+  hotels: galleryImageExternal(
+    "https://cdn.pixabay.com/photo/2016/08/05/08/27/hotel-1579355_1280.jpg"
+  ),
+  windows: galleryImageExternal(
+    "https://cdn.pixabay.com/photo/2015/07/31/12/14/cleaning-869286_1280.jpg"
+  )
 };
 
 const galleryFocus = ["center", "center", "center", "center 68%", "center 78%", "center"];
@@ -83,20 +96,44 @@ const content = {
       cards: [
         { name: "Directie & planning", role: "Onder leiding van King Prosper Asem", image: images.founder },
         { name: "Vaste lokale schoonmaakteams", role: "Algemene en specialistische schoonmaak", image: images.team },
-        { name: "Kwaliteit & communicatie", role: "Rapportages, logboeken en opvolging", image: images.quality }
+        { name: "Kwaliteit & communicatie", role: "Rapportages, logboeken en opvolging", image: images.quality, alt: "Professionele schoonmaker met materiaal voor kwaliteitscontrole" }
       ]
     },
     gallery: {
       eyebrow: "Diensten",
       title: "Werk in beeld",
-      text: "Een indruk van de commerciele locaties waar King Cleaning dagelijks voor zorgt.",
+      text: "Van kantoren en scholen tot restaurants en hotels: King Cleaning maakt het eenvoudig om afspraken te maken over scope, planning en kwaliteit.",
       items: [
-        { label: "Kantoren", image: images.offices },
-        { label: "Scholen", image: images.schools },
-        { label: "Sportscholen", image: images.gyms },
-        { label: "Trappenhuizen", image: images.staircases },
-        { label: "Restaurants", image: images.restaurants },
-        { label: "Hotels", image: images.hotels }
+        {
+          label: "Kantoren",
+          alt: "Schoonmaker dweilt de vloer in een modern kantoor",
+          image: images.offices
+        },
+        {
+          label: "Scholen",
+          alt: "Schone schoolomgeving klaar voor gebruik",
+          image: images.schools
+        },
+        {
+          label: "Sportscholen",
+          alt: "Schone fitnessruimte na professionele schoonmaak",
+          image: images.gyms
+        },
+        {
+          label: "Trappenhuizen",
+          alt: "Schoon en onderhouden trappenhuis in een gebouw",
+          image: images.staircases
+        },
+        {
+          label: "Restaurants",
+          alt: "Nette restaurantomgeving na schoonmaak",
+          image: images.restaurants
+        },
+        {
+          label: "Hotels",
+          alt: "Verzorgde hotellobby na professionele schoonmaak",
+          image: images.hotels
+        }
       ]
     },
     services: {
@@ -193,20 +230,44 @@ const content = {
       cards: [
         { name: "Director & Planning", role: "Led by King Prosper Asem", image: images.founder },
         { name: "Fixed Local Cleaning Teams", role: "General & specialist cleaning", image: images.team },
-        { name: "Quality & Communication", role: "Reports, logbooks & follow-up", image: images.quality }
+        { name: "Quality & Communication", role: "Reports, logbooks & follow-up", image: images.quality, alt: "Professional cleaner with equipment for quality follow-up" }
       ]
     },
     gallery: {
       eyebrow: "Services",
       title: "Work in Pictures",
-      text: "A look at the commercial locations King Cleaning supports every day.",
+      text: "From offices and schools to restaurants and hotels, King Cleaning makes it simple to agree on scope, planning, and quality.",
       items: [
-        { label: "Offices", image: images.offices },
-        { label: "Schools", image: images.schools },
-        { label: "Gyms", image: images.gyms },
-        { label: "Staircases", image: images.staircases },
-        { label: "Restaurants", image: images.restaurants },
-        { label: "Hotels", image: images.hotels }
+        {
+          label: "Offices",
+          alt: "Professional cleaner mopping a modern office floor",
+          image: images.offices
+        },
+        {
+          label: "Schools",
+          alt: "Clean school environment ready for daily use",
+          image: images.schools
+        },
+        {
+          label: "Gyms",
+          alt: "Spotless gym floor after professional cleaning",
+          image: images.gyms
+        },
+        {
+          label: "Staircases",
+          alt: "Well-maintained building staircase after cleaning",
+          image: images.staircases
+        },
+        {
+          label: "Restaurants",
+          alt: "Tidy restaurant dining area after cleaning",
+          image: images.restaurants
+        },
+        {
+          label: "Hotels",
+          alt: "Polished hotel lobby after professional cleaning",
+          image: images.hotels
+        }
       ]
     },
     services: {
@@ -580,7 +641,12 @@ export default function FixedHomePage() {
           <div className={styles.teamGrid}>
             {t.process.cards.map((member) => (
               <article key={member.name} className={styles.teamCard}>
-                <img key={member.image} src={member.image} alt={member.name} loading="lazy" />
+                <img
+                  key={member.image}
+                  src={member.image}
+                  alt={"alt" in member && member.alt ? member.alt : member.name}
+                  loading="lazy"
+                />
                 <div className={styles.teamMeta}>
                   <span>{member.role}</span>
                   <h3>{member.name}</h3>
@@ -601,7 +667,12 @@ export default function FixedHomePage() {
           <div className={styles.galleryGrid}>
             {t.gallery.items.map((item, index) => (
               <article key={item.label} className={styles.galleryCard}>
-                <img src={item.image} alt={`${item.label} cleaning service`} loading="lazy" style={{ objectPosition: galleryFocus[index] ?? "center" }} />
+                <img
+                  src={item.image}
+                  alt={"alt" in item && item.alt ? item.alt : `${item.label} cleaning service`}
+                  loading="lazy"
+                  style={{ objectPosition: galleryFocus[index] ?? "center" }}
+                />
                 <span>{item.label}</span>
               </article>
             ))}
