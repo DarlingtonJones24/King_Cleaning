@@ -13,20 +13,14 @@ const images = {
   founder: "/king-prosper.jpg",
   planning: "/Leader.PNG",
   team: "/Cleaners1.PNG",
-  quality:
-    "https://cdn.pixabay.com/photo/2016/03/27/21/02/cleaning-1283943_1280.jpg",
-  offices:
-    "https://cdn.pixabay.com/photo/2020/09/04/06/19/cleaning-5546204_1280.jpg",
-  schools:
-    "https://cdn.pixabay.com/photo/2017/07/06/23/04/classroom-2477803_1280.jpg",
-  gyms:
-    "https://cdn.pixabay.com/photo/2020/04/06/13/37/exercise-5006768_1280.jpg",
+  quality: "/Leader.PNG",
+  offices: "/Cleaners1.PNG",
+  schools: "/Leader.PNG",
+  gyms: "/king-prosper.jpg",
   staircases:
     "https://files.autoblogging.ai/images/how-to-clean-office-elevators-and-stairwells-best-practices-for-shared-office-buildings-in-london(dzyc).jpg_01.jpeg",
-  restaurants:
-    "https://cdn.pixabay.com/photo/2017/08/11/07/53/restaurant-2629785_1280.jpg",
-  hotels:
-    "https://cdn.pixabay.com/photo/2016/08/05/08/27/hotel-1579355_1280.jpg"
+  restaurants: "/Leader.PNG",
+  hotels: "/king-prosper.jpg"
 };
 
 const galleryFocus = ["center", "center", "center", "center 68%", "center 78%", "center"];
@@ -81,7 +75,7 @@ const content = {
       cards: [
         { name: "Directie & planning", role: "Onder leiding van King Prosper Asem", image: images.planning },
         { name: "Vaste lokale schoonmaakteams", role: "Algemene en specialistische schoonmaak", image: images.team },
-        { name: "Kwaliteit & communicatie", role: "Rapportages, logboeken en opvolging", image: images.quality, alt: "Professionele schoonmaker met schoonmaakmaterialen" }
+        { name: "Kwaliteit & communicatie", role: "Rapportages, logboeken en opvolging", image: images.quality, alt: "Professionele samenwerking en opvolging" }
       ]
     },
     gallery: {
@@ -91,32 +85,32 @@ const content = {
       items: [
         {
           label: "Kantoren",
-          alt: "Schoonmaker dweilt de vloer in een modern kantoor",
+          alt: "Professioneel schoonmaakteam in een kantoor",
           image: images.offices
         },
         {
           label: "Scholen",
-          alt: "Schone schoolomgeving klaar voor gebruik",
+          alt: "Professionele samenwerking en planning",
           image: images.schools
         },
         {
           label: "Sportscholen",
-          alt: "Schone fitnessruimte na professionele schoonmaak",
+          alt: "Schoonmaakteam in commerciele ruimte",
           image: images.gyms
         },
         {
           label: "Trappenhuizen",
-          alt: "Schoon en onderhouden trappenhuis in een gebouw",
+          alt: "Schoonmaak van trappenhuizen in kantoorgebouwen",
           image: images.staircases
         },
         {
           label: "Restaurants",
-          alt: "Nette restaurantomgeving na schoonmaak",
+          alt: "Professionele samenwerking met klanten",
           image: images.restaurants
         },
         {
           label: "Hotels",
-          alt: "Verzorgde hotellobby na professionele schoonmaak",
+          alt: "King Prosper, King Cleaning",
           image: images.hotels
         }
       ]
@@ -215,7 +209,7 @@ const content = {
       cards: [
         { name: "Director & Planning", role: "Led by King Prosper Asem", image: images.planning },
         { name: "Fixed Local Cleaning Teams", role: "General & specialist cleaning", image: images.team },
-        { name: "Quality & Communication", role: "Reports, logbooks & follow-up", image: images.quality, alt: "Professional cleaner with cleaning equipment" },
+        { name: "Quality & Communication", role: "Reports, logbooks & follow-up", image: images.quality, alt: "Professional partnership and follow-up" },
       ]
     },
     gallery: {
@@ -225,32 +219,32 @@ const content = {
       items: [
         {
           label: "Offices",
-          alt: "Professional cleaner mopping a modern office floor",
+          alt: "Professional cleaning team in a commercial office",
           image: images.offices
         },
         {
           label: "Schools",
-          alt: "Clean school environment ready for daily use",
+          alt: "Professional partnership and planning",
           image: images.schools
         },
         {
           label: "Gyms",
-          alt: "Spotless gym floor after professional cleaning",
+          alt: "King Prosper, founder of King Cleaning",
           image: images.gyms
         },
         {
           label: "Staircases",
-          alt: "Clean interior stairwell in a commercial building",
+          alt: "Cleaning stairwells in office buildings",
           image: images.staircases
         },
         {
           label: "Restaurants",
-          alt: "Tidy restaurant dining area after cleaning",
+          alt: "Professional client partnership",
           image: images.restaurants
         },
         {
           label: "Hotels",
-          alt: "Polished hotel lobby after professional cleaning",
+          alt: "King Prosper, King Cleaning",
           image: images.hotels
         }
       ]
