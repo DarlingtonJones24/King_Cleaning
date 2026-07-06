@@ -18,7 +18,9 @@ const images = {
     "https://cdn.pixabay.com/photo/2026/03/02/15/24/los-angeles-cs-commercial-cleaning-10152157_1280.jpg",
   founder: "/Leader.PNG",
   team: "/Cleaners1.PNG",
-  quality: galleryImage("6522504"),
+  quality: galleryImageExternal(
+    "https://cdn.pixabay.com/photo/2017/09/13/09/20/cleaning-2745832_1280.jpg"
+  ),
   offices: galleryImage("33728673"),
   schools: galleryImage("4484078"),
   gyms: galleryImageExternal(
@@ -578,7 +580,7 @@ export default function FixedHomePage() {
           <div className={styles.teamGrid}>
             {t.process.cards.map((member) => (
               <article key={member.name} className={styles.teamCard}>
-                <img src={member.image} alt={member.name} />
+                <img key={member.image} src={member.image} alt={member.name} loading="lazy" />
                 <div className={styles.teamMeta}>
                   <span>{member.role}</span>
                   <h3>{member.name}</h3>
