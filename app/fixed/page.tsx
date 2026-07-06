@@ -14,17 +14,13 @@ const images = {
   planning: "/Leader.PNG",
   team: "/Cleaners1.PNG",
   quality: "/Leader.PNG",
-  offices:
-    "https://www.corporatecfm.com/wp-content/uploads/2023/01/Contemporary-young-black-man-in-workwear-cleaning-floor-in-openspace-office-in-front-of-yellow-plastic-signboard-with-caution.jpg",
-  schools: "https://clickcleaning.co.za/wp-content/uploads/2022/12/school5.jpg",
-  gyms:
-    "https://tse3.mm.bing.net/th/id/OIP.LvIKbpRl0nOWOh6_1rWMvAHaED?cb=thfvnextfalcon4&rs=1&pid=ImgDetMain&o=7&rm=3",
+  offices: "/offices.jpg",
+  schools: "/schools.jpg",
+  gyms: "/gyms.webp",
   staircases:
     "https://files.autoblogging.ai/images/how-to-clean-office-elevators-and-stairwells-best-practices-for-shared-office-buildings-in-london(dzyc).jpg_01.jpeg",
-  restaurants:
-    "https://tse2.mm.bing.net/th/id/OIP.i5G9cZGMh-xCq83VRZNpSgHaE8?cb=thfvnextfalcon4&rs=1&pid=ImgDetMain&o=7&rm=3",
-  hotels:
-    "https://d3g2yh83to8qa2.cloudfront.net/wp-content/uploads/sites/50/2016/04/20071335/MG_1851-990x590.jpg"
+  restaurants: "/restaurant.webp",
+  hotels: "/hotels.jpg"
 };
 
 const galleryFocus = ["center", "center", "center", "center 68%", "center 78%", "center"];
