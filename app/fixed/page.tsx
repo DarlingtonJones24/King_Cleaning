@@ -11,9 +11,6 @@ const images = {
   hero:
     "https://cdn.pixabay.com/photo/2026/03/02/15/24/los-angeles-cs-commercial-cleaning-10152157_1280.jpg",
   founder: "/king-prosper.jpg",
-  planning: "/Leader.PNG",
-  team: "/Cleaners1.PNG",
-  quality: "/quality%20and%20communication.jpg",
   offices: "/offices.jpg",
   schools: "/schools.jpg",
   gyms: "/gyms.webp",
@@ -71,16 +68,6 @@ const content = {
         description: "Volledig getraind, betrouwbaar personeel met de hoogste standaarden."
       }
     ],
-    process: {
-      eyebrow: "Onze mensen & werkwijze",
-      title: "Hoe King Cleaning werkt",
-      text: "Een direct aangestuurd bedrijf met vaste schoonmaakteams, duidelijke taakplanning en kwaliteitsopvolging per gebouw.",
-      cards: [
-        { name: "Directie & planning", role: "Onder leiding van King Prosper Asem", image: images.planning },
-        { name: "Vaste lokale schoonmaakteams", role: "Algemene en specialistische schoonmaak", image: images.team },
-        { name: "Kwaliteit & communicatie", role: "Rapportages, logboeken en opvolging", image: images.quality, alt: "Professionele samenwerking en opvolging" }
-      ]
-    },
     gallery: {
       eyebrow: "Diensten",
       title: "Werk in beeld",
@@ -209,16 +196,6 @@ const content = {
         description: "Fully trained, reliable staff committed to the highest standards of cleanliness and customer care."
       }
     ],
-    process: {
-      eyebrow: "Our People & Process",
-      title: "How King Cleaning Works",
-      text: "A director-led company with fixed cleaning teams, clear task planning, and quality follow-up for every building.",
-      cards: [
-        { name: "Director & Planning", role: "Led by King Prosper Asem", image: images.planning },
-        { name: "Fixed Local Cleaning Teams", role: "General & specialist cleaning", image: images.team },
-        { name: "Quality & Communication", role: "Reports, logbooks & follow-up", image: images.quality, alt: "Professional partnership and follow-up" },
-      ]
-    },
     gallery: {
       eyebrow: "Services",
       title: "Work in Pictures",
@@ -723,56 +700,7 @@ export default function FixedHomePage() {
         </div>
       </section>
 
-      <section className={`${styles.section} ${styles.teamSection}`}>
-        <div className={styles.container}>
-          <div className={styles.processHeading}>
-            <div className={styles.sectionEyebrow}>{t.process.eyebrow}</div>
-            <h2>{t.process.title}</h2>
-            <p>{t.process.text}</p>
-          </div>
-          <div className={styles.teamGrid}>
-            {t.process.cards.map((member) => (
-              <article key={member.name} className={styles.teamCard}>
-                <img
-                  key={member.image}
-                  src={member.image}
-                  alt={"alt" in member && member.alt ? member.alt : member.name}
-                  loading="lazy"
-                />
-                <div className={styles.teamMeta}>
-                  <span>{member.role}</span>
-                  <h3>{member.name}</h3>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className={`${styles.section} ${styles.gallerySection}`} id="project">
-        <div className={styles.container}>
-          <div className={styles.centerIntro}>
-            <div className={styles.sectionEyebrow}>{t.gallery.eyebrow}</div>
-            <h2>{t.gallery.title}</h2>
-            <p>{t.gallery.text}</p>
-          </div>
-          <div className={styles.galleryGrid}>
-            {t.gallery.items.map((item, index) => (
-              <article key={item.label} className={styles.galleryCard}>
-                <img
-                  src={item.image}
-                  alt={"alt" in item && item.alt ? item.alt : `${item.label} cleaning service`}
-                  loading="lazy"
-                  style={{ objectPosition: galleryFocus[index] ?? "center" }}
-                />
-                <span>{item.label}</span>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.section} id="services">
+      <section className={`${styles.section} ${styles.pricingSection}`} id="services">
         <div className={styles.container}>
           <div className={styles.centerIntro}>
             <div className={styles.sectionEyebrow}>{s.eyebrow}</div>
@@ -902,6 +830,29 @@ export default function FixedHomePage() {
         </div>
       </section>
 
+      <section className={`${styles.section} ${styles.gallerySection}`} id="project">
+        <div className={styles.container}>
+          <div className={styles.centerIntro}>
+            <div className={styles.sectionEyebrow}>{t.gallery.eyebrow}</div>
+            <h2>{t.gallery.title}</h2>
+            <p>{t.gallery.text}</p>
+          </div>
+          <div className={styles.galleryGrid}>
+            {t.gallery.items.map((item, index) => (
+              <article key={item.label} className={styles.galleryCard}>
+                <img
+                  src={item.image}
+                  alt={"alt" in item && item.alt ? item.alt : `${item.label} cleaning service`}
+                  loading="lazy"
+                  style={{ objectPosition: galleryFocus[index] ?? "center" }}
+                />
+                <span>{item.label}</span>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className={`${styles.section} ${styles.footerSection}`} id="contact">
         <div className={styles.container}>
           <div className={styles.centerIntro}>
@@ -949,27 +900,29 @@ export default function FixedHomePage() {
             </form>
           </div>
 
-          <footer className={styles.siteFooter}>
-            <div>
-              <span>{t.contact.reach}</span>
-              <a href="mailto:info@kingcleaning.nl">info@kingcleaning.nl</a>
-              <a href="tel:+31202380376">+31 - 020-2380376</a>
-              <a href="tel:+31622813149">+31 - 622813149</a>
-            </div>
-            <div>
-              <span>{t.contact.business}</span>
-              <p>{t.contact.director}</p>
-              <p>Paasheuvelweg 33, 1105 BG Amsterdam</p>
-            </div>
-            <div>
-              <span>{t.contact.quick}</span>
-              <a href="#about" onClick={(event) => navigateToSection(event, "about")}>{t.nav.about}</a>
-              <a href="#services" onClick={(event) => navigateToSection(event, "services")}>{t.nav.services}</a>
-              <a href="#project" onClick={(event) => navigateToSection(event, "project")}>{t.nav.work}</a>
-              <a href="#contact" onClick={(event) => navigateToSection(event, "contact")}>{t.nav.contact}</a>
-            </div>
-          </footer>
-          <p className={styles.copyright}>{t.contact.copyright}</p>
+          <div className={styles.siteFooterBand}>
+            <footer className={styles.siteFooter}>
+              <div>
+                <span>{t.contact.reach}</span>
+                <a href="mailto:info@kingcleaning.nl">info@kingcleaning.nl</a>
+                <a href="tel:+31202380376">+31 - 020-2380376</a>
+                <a href="tel:+31622813149">+31 - 622813149</a>
+              </div>
+              <div>
+                <span>{t.contact.business}</span>
+                <p>{t.contact.director}</p>
+                <p>Paasheuvelweg 33, 1105 BG Amsterdam</p>
+              </div>
+              <div>
+                <span>{t.contact.quick}</span>
+                <a href="#about" onClick={(event) => navigateToSection(event, "about")}>{t.nav.about}</a>
+                <a href="#services" onClick={(event) => navigateToSection(event, "services")}>{t.nav.services}</a>
+                <a href="#project" onClick={(event) => navigateToSection(event, "project")}>{t.nav.work}</a>
+                <a href="#contact" onClick={(event) => navigateToSection(event, "contact")}>{t.nav.contact}</a>
+              </div>
+            </footer>
+            <p className={styles.copyright}>{t.contact.copyright}</p>
+          </div>
         </div>
       </section>
 
