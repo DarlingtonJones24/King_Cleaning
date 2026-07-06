@@ -142,7 +142,8 @@ const content = {
       customQuote: "Maatwerk offerte",
       siteAssessment: "Locatiebeoordeling",
       interiorWindows: "Binnenramen",
-      exteriorWindows: "Buitenramen"
+      exteriorWindows: "Buitenramen",
+      tableScrollHint: "Veeg naar rechts voor alle kolommen →"
     },
     contact: {
       eyebrow: "Contact",
@@ -276,7 +277,8 @@ const content = {
       customQuote: "Custom Quote",
       siteAssessment: "Site Assessment",
       interiorWindows: "Interior Windows",
-      exteriorWindows: "Exterior Windows"
+      exteriorWindows: "Exterior Windows",
+      tableScrollHint: "Swipe right to see all columns →"
     },
     contact: {
       eyebrow: "Contact Us",
@@ -472,16 +474,18 @@ export default function FixedHomePage() {
           {s.startingRate}: <strong>{rate}</strong> {s.perHour}
         </p>
       </div>
-      <div className={styles.tableWrap}>
-        <table className={styles.pricingTable}>
-          <thead>
-            <tr>
-              <th>{s.buildingSize}</th>
-              {fourColumns && <th>{s.cleaners}</th>}
-              <th>{s.time}</th>
-              <th>{s.startingPrice}</th>
-            </tr>
-          </thead>
+      <div className={styles.tableScrollRegion}>
+        <p className={styles.tableScrollHint}>{s.tableScrollHint}</p>
+        <div className={styles.tableWrap}>
+          <table className={styles.pricingTable}>
+            <thead>
+              <tr>
+                <th>{s.buildingSize}</th>
+                {fourColumns && <th>{s.cleaners}</th>}
+                <th>{s.time}</th>
+                <th>{s.startingPrice}</th>
+              </tr>
+            </thead>
           <tbody>
             {rows.map((row, rowIndex) => (
               <tr key={`${title}-${rowIndex}`}>
@@ -492,6 +496,7 @@ export default function FixedHomePage() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
       <div className={styles.includesList}>
         <strong>{s.includes}</strong>
@@ -705,7 +710,9 @@ export default function FixedHomePage() {
             <div className={styles.windowPricingGrid}>
               <div>
                 <p><strong>{s.interiorWindows}</strong> — {s.startingRate}: {interiorWindowPricing.rate} {s.perHour}</p>
-                <div className={styles.tableWrap}>
+                <div className={styles.tableScrollRegion}>
+                  <p className={styles.tableScrollHint}>{s.tableScrollHint}</p>
+                  <div className={styles.tableWrap}>
                   <table className={styles.pricingTable}>
                     <thead>
                       <tr>
@@ -724,11 +731,14 @@ export default function FixedHomePage() {
                       ))}
                     </tbody>
                   </table>
+                  </div>
                 </div>
               </div>
               <div>
                 <p><strong>{s.exteriorWindows}</strong> — {s.startingRate}: {exteriorWindowPricing.rate} {s.perHour}</p>
-                <div className={styles.tableWrap}>
+                <div className={styles.tableScrollRegion}>
+                  <p className={styles.tableScrollHint}>{s.tableScrollHint}</p>
+                  <div className={styles.tableWrap}>
                   <table className={styles.pricingTable}>
                     <thead>
                       <tr>
@@ -747,6 +757,7 @@ export default function FixedHomePage() {
                       ))}
                     </tbody>
                   </table>
+                  </div>
                 </div>
               </div>
             </div>
@@ -756,7 +767,9 @@ export default function FixedHomePage() {
             <div className={styles.pricingHeader}>
               <h3>{s.additionalCharges}</h3>
             </div>
-            <div className={styles.tableWrap}>
+            <div className={styles.tableScrollRegion}>
+              <p className={styles.tableScrollHint}>{s.tableScrollHint}</p>
+              <div className={styles.tableWrap}>
               <table className={styles.pricingTable}>
                 <thead>
                   <tr>
@@ -775,6 +788,7 @@ export default function FixedHomePage() {
                   ))}
                 </tbody>
               </table>
+              </div>
             </div>
           </article>
         </div>

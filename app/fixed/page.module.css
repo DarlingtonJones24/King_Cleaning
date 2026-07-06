@@ -1,16 +1,27 @@
 .page {
+  width: 100%;
   min-height: 100vh;
+  overflow-x: hidden;
   color: #10272c;
 }
 
 .container {
-  width: min(100%, 1280px);
-  margin: 0 auto;
-  padding-inline: clamp(16px, 2.5vw, 48px);
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding-inline: clamp(16px, 3vw, 48px);
 }
 
 .heroWrap {
-  padding: 20px 0 18px;
+  padding: 0;
+}
+
+.heroWrap .container {
+  padding-inline: 0;
+}
+
+.heroWrap .header {
+  padding-inline: clamp(16px, 3vw, 48px);
 }
 
 .header {
@@ -161,8 +172,8 @@
   position: relative;
   min-height: clamp(520px, 72vh, 680px);
   overflow: hidden;
-  border-radius: 34px;
-  box-shadow: 0 30px 80px rgba(16, 39, 44, 0.18);
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .heroImage,
@@ -851,9 +862,18 @@
   line-height: 1.6;
 }
 
+.tableScrollRegion {
+  position: relative;
+  margin-top: 18px;
+}
+
+.tableScrollHint {
+  display: none;
+}
+
 .tableWrap {
   overflow-x: auto;
-  margin-top: 18px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .pricingTable {
@@ -1259,7 +1279,11 @@
   }
 
   .container {
-    padding-inline: 14px;
+    padding-inline: 16px;
+  }
+
+  .heroWrap .container {
+    padding-inline: 0;
   }
 
   .header {
@@ -1269,8 +1293,8 @@
     flex-wrap: nowrap;
     justify-content: space-between;
     gap: 12px;
-    margin-inline: -14px;
-    padding: 12px 14px;
+    margin-inline: 0;
+    padding: 12px 16px;
     background: #edf5f3;
     border-bottom: 1px solid rgba(12, 86, 96, 0.08);
   }
@@ -1305,7 +1329,8 @@
 
   .heroCard {
     min-height: 480px;
-    border-radius: 24px;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .heroInner {
@@ -1348,6 +1373,34 @@
     background: rgba(255, 255, 255, 0.14);
     color: #ffffff;
     backdrop-filter: blur(10px);
+  }
+
+  .tableScrollHint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: rgba(12, 86, 96, 0.08);
+    color: #0c5660;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .tableScrollRegion::after {
+    content: "";
+    position: absolute;
+    top: 42px;
+    right: 0;
+    width: 28px;
+    bottom: 0;
+    background: linear-gradient(to left, #ffffff 15%, transparent);
+    pointer-events: none;
+  }
+
+  .pricingTable {
+    min-width: 520px;
   }
 
   .section {
