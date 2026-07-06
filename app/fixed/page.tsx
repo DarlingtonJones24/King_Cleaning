@@ -36,15 +36,18 @@ const content = {
     },
     about: {
       eyebrow: "Over King Cleaning",
-      title: "Over King Cleaning",
+      headline: "Schone ruimtes. Sterkere bedrijven.",
       text: "Onder leiding van King Prosper bieden wij professionele schoonmaakdiensten voor bedrijven van elk type, waaronder ziekenhuizen, kantoren, restaurants, winkelruimtes en commerciele locaties in Amsterdam.",
-      founderTitle: "Oprichter van King Cleaning",
+      founderTitle: "Oprichter, King Cleaning",
+      aboutUsTitle: "Over ons",
+      aboutUsText:
+        "Wij helpen organisaties in Amsterdam met betrouwbare schoonmaak, duidelijke afspraken en vaste teams die uw locatie representeren.",
       missionTitle: "Onze missie",
       mission:
         "Uitzonderlijke, betrouwbare en professionele schoonmaakdiensten leveren met vakmanschap en aandacht.",
       visionTitle: "Onze visie",
       vision:
-        "Onze visie is om de vertrouwde leider in commerciele schoonmaak te zijn en de standaard te zetten voor kwaliteit, integriteit en klanttevredenheid."
+        "De vertrouwde leider in commerciele schoonmaak zijn en de standaard zetten voor kwaliteit, integriteit en klanttevredenheid."
     },
     stats: [
       {
@@ -171,15 +174,18 @@ const content = {
     },
     about: {
       eyebrow: "About King Cleaning",
-      title: "About King Cleaning",
+      headline: "Clean Spaces. Stronger Businesses.",
       text: "Led by King Prosper, we provide professional cleaning services for businesses of all types, including hospitals, offices, restaurants, retail spaces, and commercial facilities in Amsterdam.",
-      founderTitle: "Founder of King Cleaning",
+      founderTitle: "Founder, King Cleaning",
+      aboutUsTitle: "About Us",
+      aboutUsText:
+        "We help Amsterdam organisations with reliable cleaning, clear agreements, and dedicated teams that represent your location professionally.",
       missionTitle: "Our Mission",
       mission:
-        "To provide exceptional, reliable and professional cleaning services with professionalism.",
+        "To deliver exceptional, reliable, and professional cleaning services with craftsmanship and care.",
       visionTitle: "Our Vision",
       vision:
-        "Our vision is to be the trusted leader in commercial cleaning, setting the standard for quality, integrity, and customer satisfaction."
+        "To be the trusted leader in commercial cleaning, setting the standard for quality, integrity, and customer satisfaction."
     },
     stats: [
       {
@@ -385,6 +391,35 @@ const additionalCharges = [
 
 const serviceOrder: ServiceKey[] = ["general", "deep", "window"];
 
+function AboutPillarIcon({ type }: { type: "about" | "mission" | "vision" }) {
+  if (type === "about") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" strokeLinecap="round" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" strokeLinecap="round" />
+      </svg>
+    );
+  }
+
+  if (type === "mission") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+        <circle cx="12" cy="12" r="8" />
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M2 12h2M20 12h2" strokeLinecap="round" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  );
+}
+
 export default function FixedHomePage() {
   const [language, setLanguage] = useState<Language>("nl");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -420,6 +455,12 @@ export default function FixedHomePage() {
   };
 
   const selectedSummary = selectedServices.map((key) => s.options[key]).join(", ");
+
+  const aboutPillars = [
+    { type: "about" as const, title: t.about.aboutUsTitle, text: t.about.aboutUsText },
+    { type: "mission" as const, title: t.about.missionTitle, text: t.about.mission },
+    { type: "vision" as const, title: t.about.visionTitle, text: t.about.vision }
+  ];
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     if (!selectedServices.length) {
@@ -639,28 +680,35 @@ export default function FixedHomePage() {
       <section className={`${styles.section} ${styles.aboutSection}`} id="about">
         <div className={styles.container}>
           <div className={styles.aboutSplit}>
+            <figure className={styles.founderCard}>
+              <div className={styles.founderImageWrap}>
+                <img src={images.founder} alt="King Prosper Asem" />
+                <figcaption className={styles.founderCaption}>
+                  <strong>King Prosper Asem</strong>
+                  <span>{t.about.founderTitle}</span>
+                </figcaption>
+              </div>
+            </figure>
+
             <div className={styles.aboutCopy}>
-              <div className={styles.sectionEyebrow}>{t.about.eyebrow}</div>
-              <h2>{t.about.title}</h2>
-              <p>{t.about.text}</p>
-              <div className={styles.missionVision}>
-                <div>
-                  <h3>{t.about.missionTitle}</h3>
-                  <p>{t.about.mission}</p>
-                </div>
-                <div>
-                  <h3>{t.about.visionTitle}</h3>
-                  <p>{t.about.vision}</p>
-                </div>
+              <div className={styles.aboutEyebrow}>{t.about.eyebrow}</div>
+              <h2>{t.about.headline}</h2>
+              <p className={styles.aboutIntro}>{t.about.text}</p>
+
+              <div className={styles.aboutPillars}>
+                {aboutPillars.map((pillar) => (
+                  <article key={pillar.type} className={styles.aboutPillar}>
+                    <span className={styles.aboutPillarIcon}>
+                      <AboutPillarIcon type={pillar.type} />
+                    </span>
+                    <div>
+                      <h3>{pillar.title}</h3>
+                      <p>{pillar.text}</p>
+                    </div>
+                  </article>
+                ))}
               </div>
             </div>
-            <figure className={styles.founderCard}>
-              <img src={images.founder} alt="King Prosper Asem" />
-              <figcaption>
-                <strong>King Prosper Asem</strong>
-                <span>{t.about.founderTitle}</span>
-              </figcaption>
-            </figure>
           </div>
 
           <div className={styles.statsGrid}>

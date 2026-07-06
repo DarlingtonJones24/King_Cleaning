@@ -365,13 +365,14 @@
   width: 100%;
   max-width: 100%;
   overflow-x: clip;
+  background: linear-gradient(180deg, #f6f9f8 0%, #f2f6f5 100%);
 }
 
 .aboutSplit {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: clamp(24px, 4vw, 48px);
-  align-items: center;
+  grid-template-columns: minmax(0, 0.44fr) minmax(0, 0.56fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
   width: 100%;
   min-width: 0;
 }
@@ -379,39 +380,92 @@
 .aboutCopy {
   min-width: 0;
   max-width: 100%;
+  padding-top: 8px;
+}
+
+.aboutEyebrow {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  color: #0c5660;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.aboutEyebrow::before {
+  content: "";
+  width: 52px;
+  height: 3px;
+  border-radius: 999px;
+  background: #0c5660;
 }
 
 .aboutCopy h2 {
   margin: 18px 0 0;
-  font-size: clamp(38px, 4vw, 58px);
-  line-height: 1.06;
-  letter-spacing: -0.06em;
-  overflow-wrap: anywhere;
+  color: #0b3340;
+  font-size: clamp(34px, 3.8vw, 52px);
+  line-height: 1.08;
+  letter-spacing: -0.05em;
 }
 
-.aboutCopy > p {
-  margin: 18px 0 0;
-  max-width: 720px;
-  color: rgba(16, 39, 44, 0.68);
-  font-size: 18px;
-  line-height: 1.7;
+.aboutIntro {
+  margin: 20px 0 0;
+  max-width: 640px;
+  color: rgba(16, 39, 44, 0.72);
+  font-size: 17px;
+  line-height: 1.75;
 }
 
-.missionVision {
-  display: grid;
-  gap: 22px;
+.aboutPillars {
   margin-top: 28px;
+  border-top: 1px solid rgba(12, 86, 96, 0.12);
 }
 
-.missionVision h3 {
-  margin: 0 0 8px;
-  font-size: 22px;
-  letter-spacing: -0.03em;
+.aboutPillar {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  padding: 22px 0;
+  border-bottom: 1px solid rgba(12, 86, 96, 0.12);
 }
 
-.missionVision p {
+.aboutPillar:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.aboutPillarIcon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  background: #0c5660;
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(12, 86, 96, 0.18);
+}
+
+.aboutPillarIcon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.aboutPillar h3 {
+  margin: 4px 0 8px;
+  color: #10272c;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.aboutPillar p {
   margin: 0;
   color: rgba(16, 39, 44, 0.68);
+  font-size: 15px;
   line-height: 1.7;
 }
 
@@ -419,35 +473,47 @@
   margin: 0;
   min-width: 0;
   max-width: 100%;
+}
+
+.founderImageWrap {
+  position: relative;
   overflow: hidden;
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(12, 86, 96, 0.08);
-  box-shadow: 0 18px 40px rgba(16, 39, 44, 0.08);
+  border-radius: 22px;
+  background: #0b3340;
+  box-shadow: 0 24px 56px rgba(16, 39, 44, 0.16);
 }
 
 .founderCard img {
+  display: block;
   width: 100%;
   max-width: 100%;
-  height: 420px;
+  height: min(560px, 72vh);
+  min-height: 420px;
   object-fit: cover;
   object-position: center top;
 }
 
-.founderCard figcaption {
+.founderCaption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: grid;
-  gap: 6px;
-  padding: 22px 24px 26px;
+  gap: 4px;
+  padding: 18px 22px;
+  background: linear-gradient(180deg, rgba(11, 51, 64, 0) 0%, rgba(11, 51, 64, 0.92) 38%, #0b3340 100%);
 }
 
-.founderCard strong {
-  font-size: 24px;
-  letter-spacing: -0.04em;
+.founderCaption strong {
+  color: #ffffff;
+  font-size: clamp(20px, 2.2vw, 24px);
+  letter-spacing: -0.03em;
 }
 
-.founderCard span {
-  color: rgba(16, 39, 44, 0.62);
-  font-size: 15px;
+.founderCaption span {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .statsGrid {
@@ -1305,7 +1371,11 @@
 }
 
 @media (max-width: 1180px) {
-  .aboutSplit,
+  .aboutSplit {
+    grid-template-columns: minmax(0, 0.48fr) minmax(0, 0.52fr);
+    gap: 28px;
+  }
+
   .windowPricingGrid,
   .serviceOptions,
   .siteFooter {
@@ -1411,23 +1481,39 @@
 
   .aboutSplit {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 28px;
+  }
+
+  .aboutCopy {
+    padding-top: 0;
   }
 
   .aboutCopy h2 {
     font-size: clamp(30px, 8.5vw, 40px);
     letter-spacing: -0.03em;
-    line-height: 1.1;
+    line-height: 1.12;
   }
 
-  .aboutCopy > p,
-  .missionVision p {
+  .aboutIntro,
+  .aboutPillar p {
     font-size: 16px;
     line-height: 1.65;
   }
 
   .founderCard img {
-    height: min(360px, 70vw);
+    height: min(420px, 78vw);
+    min-height: 320px;
+  }
+
+  .aboutPillar {
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 14px;
+    padding: 20px 0;
+  }
+
+  .aboutPillarIcon {
+    width: 48px;
+    height: 48px;
   }
 
   .statsGrid {
@@ -1446,10 +1532,10 @@
 
   .aboutCopy,
   .aboutCopy h2,
-  .aboutCopy p,
-  .missionVision,
-  .missionVision h3,
-  .missionVision p,
+  .aboutIntro,
+  .aboutPillar,
+  .aboutPillar h3,
+  .aboutPillar p,
   .centerIntro,
   .centerIntro h2,
   .centerIntro p,
