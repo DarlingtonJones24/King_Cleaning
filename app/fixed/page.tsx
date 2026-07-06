@@ -18,7 +18,7 @@ const images = {
     "https://cdn.pixabay.com/photo/2026/03/02/15/24/los-angeles-cs-commercial-cleaning-10152157_1280.jpg",
   founder: "/Leader.PNG",
   team: "/Cleaners1.PNG",
-  people: "/Cleaners1.PNG",
+  quality: galleryImage("6522504"),
   offices: galleryImage("33728673"),
   schools: galleryImage("4484078"),
   gyms: galleryImageExternal(
@@ -81,7 +81,7 @@ const content = {
       cards: [
         { name: "Directie & planning", role: "Onder leiding van King Prosper Asem", image: images.founder },
         { name: "Vaste lokale schoonmaakteams", role: "Algemene en specialistische schoonmaak", image: images.team },
-        { name: "Kwaliteit & communicatie", role: "Rapportages, logboeken en opvolging", image: images.people }
+        { name: "Kwaliteit & communicatie", role: "Rapportages, logboeken en opvolging", image: images.quality }
       ]
     },
     gallery: {
@@ -191,7 +191,7 @@ const content = {
       cards: [
         { name: "Director & Planning", role: "Led by King Prosper Asem", image: images.founder },
         { name: "Fixed Local Cleaning Teams", role: "General & specialist cleaning", image: images.team },
-        { name: "Quality & Communication", role: "Reports, logbooks & follow-up", image: images.people }
+        { name: "Quality & Communication", role: "Reports, logbooks & follow-up", image: images.quality }
       ]
     },
     gallery: {
