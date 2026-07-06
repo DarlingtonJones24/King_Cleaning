@@ -9,8 +9,9 @@ type ServiceKey = "general" | "deep" | "window";
 
 const images = {
   hero:
-    "https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "https://cdn.pixabay.com/photo/2026/03/02/15/24/los-angeles-cs-commercial-cleaning-10152157_1280.jpg",
   founder: "/king-prosper.jpg",
+  planning: "/Leader.PNG",
   team: "/Cleaners1.PNG",
   quality:
     "https://images.pexels.com/photos/6195126/pexels-photo-6195126.jpeg?auto=compress&cs=tinysrgb&w=1200",
@@ -86,7 +87,7 @@ const content = {
       title: "Hoe King Cleaning werkt",
       text: "Een direct aangestuurd bedrijf met vaste schoonmaakteams, duidelijke taakplanning en kwaliteitsopvolging per gebouw.",
       cards: [
-        { name: "Directie & planning", role: "Onder leiding van King Prosper Asem", image: images.founder },
+        { name: "Directie & planning", role: "Onder leiding van King Prosper Asem", image: images.planning },
         { name: "Vaste lokale schoonmaakteams", role: "Algemene en specialistische schoonmaak", image: images.team },
         { name: "Kwaliteit & communicatie", role: "Rapportages, logboeken en opvolging", image: images.quality, alt: "Professionele schoonmaker met materiaal voor kwaliteitscontrole" }
       ]
@@ -220,7 +221,7 @@ const content = {
       title: "How King Cleaning Works",
       text: "A director-led company with fixed cleaning teams, clear task planning, and quality follow-up for every building.",
       cards: [
-        { name: "Director & Planning", role: "Led by King Prosper Asem", image: images.founder },
+        { name: "Director & Planning", role: "Led by King Prosper Asem", image: images.planning },
         { name: "Fixed Local Cleaning Teams", role: "General & specialist cleaning", image: images.team },
         { name: "Quality & Communication", role: "Reports, logbooks & follow-up", image: images.quality, alt: "Professional cleaner with equipment for quality follow-up" }
       ]
