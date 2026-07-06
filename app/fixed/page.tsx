@@ -145,6 +145,9 @@ const content = {
       formPhone: "Telefoon",
       formMessage: "Bericht",
       formSubmit: "Aanvraag versturen",
+      formSending: "Versturen…",
+      formSuccess: "Bedankt! Uw bericht is verzonden naar info@kingcleaning.nl. Wij reageren binnen 24 uur.",
+      formError: "Verzenden mislukt. Probeer het opnieuw of mail direct naar info@kingcleaning.nl.",
       reach: "Bereikbaar via",
       business: "Bedrijfsgegevens",
       director: "Directeur: King Prosper Asem",
@@ -274,6 +277,9 @@ const content = {
       formPhone: "Phone",
       formMessage: "Message",
       formSubmit: "Send Request",
+      formSending: "Sending…",
+      formSuccess: "Thank you! Your message was sent to info@kingcleaning.nl. We will respond within 24 hours.",
+      formError: "Could not send your message. Please try again or email info@kingcleaning.nl directly.",
       reach: "Reach Out",
       business: "Business Details",
       director: "Director: King Prosper Asem",
@@ -404,6 +410,7 @@ export default function FixedHomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedServices, setSelectedServices] = useState<ServiceKey[]>([]);
   const [message, setMessage] = useState("");
+  const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const menuToggleRef = useRef<HTMLButtonElement>(null);
   const menuWasOpenRef = useRef(false);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
@@ -441,20 +448,52 @@ export default function FixedHomePage() {
     { type: "vision" as const, title: t.about.visionTitle, text: t.about.vision }
   ];
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    if (!selectedServices.length) {
-      event.preventDefault();
-      return;
-    }
-    const form = event.currentTarget;
-    const messageField = form.elements.namedItem("message") as HTMLTextAreaElement | null;
-    if (!messageField) return;
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!selectedServices.length || formStatus === "sending") return;
 
+    const form = event.currentTarget;
+    const honey = (form.elements.namedItem("_honey") as HTMLInputElement | null)?.value;
+    if (honey) return;
+
+    const name = (form.elements.namedItem("name") as HTMLInputElement).value.trim();
+    const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim();
+    const phone = (form.elements.namedItem("phone") as HTMLInputElement).value.trim();
     const prefix =
       language === "nl"
         ? `Geselecteerde diensten: ${selectedSummary}\n\n`
         : `Selected services: ${selectedSummary}\n\n`;
-    messageField.value = `${prefix}${message}`.trim();
+    const fullMessage = `${prefix}${message}`.trim();
+    const subject =
+      language === "nl"
+        ? `Nieuwe aanvraag — ${selectedSummary}`
+        : `New request — ${selectedSummary}`;
+
+    setFormStatus("sending");
+    try {
+      const body = new FormData();
+      body.append("name", name);
+      body.append("email", email);
+      body.append("phone", phone);
+      body.append("message", fullMessage);
+      body.append("selected_services", selectedSummary);
+      body.append("_subject", subject);
+      body.append("_template", "table");
+      body.append("_replyto", email);
+      body.append("_captcha", "false");
+
+      const res = await fetch("https://formsubmit.co/ajax/info@kingcleaning.nl", {
+        method: "POST",
+        body,
+        headers: { Accept: "application/json" }
+      });
+      if (!res.ok) throw new Error("submit failed");
+      setFormStatus("success");
+      setMessage("");
+      form.reset();
+    } catch {
+      setFormStatus("error");
+    }
   };
 
   useEffect(() => {
@@ -877,18 +916,10 @@ export default function FixedHomePage() {
           </div>
 
           <div className={styles.contactPanel}>
-            <form
-              className={styles.contactForm}
-              action="https://formsubmit.co/info@kingcleaning.nl"
-              method="POST"
-              onSubmit={handleSubmit}
-            >
-              <input type="hidden" name="_subject" value="Nieuwe aanvraag via King Cleaning website" />
-              <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_next" value="https://kingcleaningbv.nl/#contact" />
-              <input type="hidden" name="selected_services" value={selectedSummary} />
+            <form className={styles.contactForm} onSubmit={handleSubmit}>
               <input className={styles.honeyField} type="text" name="_honey" tabIndex={-1} autoComplete="off" />
+              {formStatus === "success" && <p className={styles.formNoticeSuccess}>{t.contact.formSuccess}</p>}
+              {formStatus === "error" && <p className={styles.formNoticeError}>{t.contact.formError}</p>}
               <label>
                 <span>{t.contact.formName}</span>
                 <input name="name" type="text" autoComplete="name" required />
@@ -909,8 +940,8 @@ export default function FixedHomePage() {
                 <strong>{s.summaryTitle}</strong>
                 <p>{selectedSummary || s.summaryEmpty}</p>
               </div>
-              <button className={styles.primaryAction} type="submit" disabled={!selectedServices.length}>
-                {t.contact.formSubmit}
+              <button className={styles.primaryAction} type="submit" disabled={!selectedServices.length || formStatus === "sending"}>
+                {formStatus === "sending" ? t.contact.formSending : t.contact.formSubmit}
               </button>
             </form>
           </div>
