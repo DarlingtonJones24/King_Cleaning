@@ -698,16 +698,6 @@ export default function FixedHomePage() {
       <section className={`${styles.section} ${styles.aboutSection}`} id="about">
         <div className={styles.container}>
           <div className={styles.aboutSplit}>
-            <figure className={styles.founderCard}>
-              <div className={styles.founderImageWrap}>
-                <img src={images.founder} alt="King Prosper Asem" />
-                <figcaption className={styles.founderCaption}>
-                  <strong>King Prosper Asem</strong>
-                  <span>{t.about.founderTitle}</span>
-                </figcaption>
-              </div>
-            </figure>
-
             <div className={styles.aboutCopy}>
               <div className={styles.aboutEyebrow}>{t.about.eyebrow}</div>
               <h2>{t.about.headline}</h2>
@@ -727,6 +717,16 @@ export default function FixedHomePage() {
                 ))}
               </div>
             </div>
+
+            <figure className={styles.founderCard}>
+              <div className={styles.founderImageWrap}>
+                <img src={images.founder} alt="King Prosper Asem" />
+                <figcaption className={styles.founderCaption}>
+                  <strong>King Prosper Asem</strong>
+                  <span>{t.about.founderTitle}</span>
+                </figcaption>
+              </div>
+            </figure>
           </div>
 
           <div className={styles.statsGrid}>

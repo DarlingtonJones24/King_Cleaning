@@ -365,7 +365,7 @@
 
 .aboutSplit {
   display: grid;
-  grid-template-columns: minmax(0, 0.44fr) minmax(0, 0.56fr);
+  grid-template-columns: minmax(0, 0.56fr) minmax(0, 0.44fr);
   gap: clamp(28px, 4vw, 56px);
   align-items: start;
   width: 100%;
@@ -1346,7 +1346,7 @@
 
 @media (max-width: 1180px) {
   .aboutSplit {
-    grid-template-columns: minmax(0, 0.48fr) minmax(0, 0.52fr);
+    grid-template-columns: minmax(0, 0.52fr) minmax(0, 0.48fr);
     gap: 28px;
   }
 
