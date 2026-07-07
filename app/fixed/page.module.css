@@ -853,6 +853,8 @@
   font: inherit;
   font-weight: 700;
   text-align: left;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .serviceOptionActive {
@@ -900,6 +902,7 @@
 .pricingResults {
   width: 100%;
   min-width: 0;
+  overflow-anchor: none;
 }
 
 .pricingPrompt {
@@ -997,6 +1000,7 @@
   max-width: 100%;
   min-width: 0;
   overflow: hidden;
+  overflow-anchor: none;
 }
 
 .siteFooter {
@@ -1069,6 +1073,7 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   margin-top: 0;
+  overflow-anchor: none;
 }
 
 .contactForm label {
@@ -1163,8 +1168,12 @@
   background: rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.92);
   cursor: pointer;
+  font: inherit;
   font-size: 14px;
   font-weight: 700;
+  text-align: left;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .formServiceOptionActive {
@@ -1172,11 +1181,22 @@
   background: rgba(126, 216, 199, 0.14);
 }
 
-.formServiceOption input {
-  width: auto;
-  margin: 0;
-  accent-color: #7ed8c7;
-  flex: 0 0 auto;
+.formServiceCheck {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 13px;
+  line-height: 1;
+  flex: 0 0 22px;
+}
+
+.formServiceOptionActive .formServiceCheck {
+  border-color: rgba(126, 216, 199, 0.8);
+  background: rgba(126, 216, 199, 0.24);
 }
 
 .formChoiceGroup {
@@ -1196,13 +1216,26 @@
   background: rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.92);
   cursor: pointer;
+  font: inherit;
+  text-align: left;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.formChoice input {
-  width: auto;
-  margin: 0;
-  accent-color: #7ed8c7;
-  flex: 0 0 auto;
+.formChoiceActive {
+  border-color: rgba(126, 216, 199, 0.55);
+  background: rgba(126, 216, 199, 0.14);
+}
+
+.formChoiceMark {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  font-size: 12px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .formChoice span {

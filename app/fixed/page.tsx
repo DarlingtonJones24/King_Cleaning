@@ -470,6 +470,16 @@ function parseEuroPrice(price: string) {
   return Number.parseFloat(match[1].replace(/\./g, "").replace(",", "."));
 }
 
+function preserveScroll(action: () => void) {
+  const scrollY = window.scrollY;
+  action();
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollY);
+    });
+  });
+}
+
 function AboutPillarIcon({ type }: { type: "about" | "mission" | "vision" }) {
   if (type === "about") {
     return (
@@ -532,14 +542,22 @@ export default function FixedHomePage() {
   };
 
   const selectService = (key: ServiceKey) => {
-    setSelectedService(key);
-    setFormServices((current) => (current.includes(key) ? current : [...current, key]));
+    preserveScroll(() => {
+      setSelectedService(key);
+      setFormServices((current) => (current.includes(key) ? current : [...current, key]));
+    });
   };
 
   const toggleFormService = (key: ServiceKey) => {
-    setFormServices((current) =>
-      current.includes(key) ? current.filter((item) => item !== key) : [...current, key]
-    );
+    preserveScroll(() => {
+      setFormServices((current) =>
+        current.includes(key) ? current.filter((item) => item !== key) : [...current, key]
+      );
+    });
+  };
+
+  const selectWindowType = (type: WindowType) => {
+    preserveScroll(() => setWindowType(type));
   };
 
   const parsedSquareMeters = Number.parseFloat(squareMeters);
@@ -933,6 +951,7 @@ export default function FixedHomePage() {
                     role="radio"
                     aria-checked={active}
                     onClick={() => selectService(key)}
+                    onMouseDown={(event) => event.preventDefault()}
                   >
                     <span className={styles.serviceOptionCheck} aria-hidden="true">{active ? "●" : "○"}</span>
                     <span>{s.options[key]}</span>
@@ -1104,20 +1123,23 @@ export default function FixedHomePage() {
               <fieldset className={styles.formFieldset}>
                 <legend>{t.contact.formService}</legend>
                 <p className={styles.formFieldHint}>{t.contact.formServiceHint}</p>
-                <div className={styles.formServiceGroup}>
+                <div className={styles.formServiceGroup} role="group" aria-label={t.contact.formService}>
                   {serviceOrder.map((key) => {
                     const active = formServices.includes(key);
                     return (
-                      <label key={key} className={`${styles.formServiceOption} ${active ? styles.formServiceOptionActive : ""}`}>
-                        <input
-                          type="checkbox"
-                          name="service_type"
-                          value={key}
-                          checked={active}
-                          onChange={() => toggleFormService(key)}
-                        />
+                      <button
+                        key={key}
+                        type="button"
+                        className={`${styles.formServiceOption} ${active ? styles.formServiceOptionActive : ""}`}
+                        aria-pressed={active}
+                        onMouseDown={(event) => event.preventDefault()}
+                        onClick={() => toggleFormService(key)}
+                      >
+                        <span className={styles.formServiceCheck} aria-hidden="true">
+                          {active ? "✓" : ""}
+                        </span>
                         <span>{s.options[key]}</span>
-                      </label>
+                      </button>
                     );
                   })}
                 </div>
@@ -1139,27 +1161,33 @@ export default function FixedHomePage() {
               {formServices.includes("window") && (
                 <fieldset className={styles.formFieldset}>
                   <legend>{t.contact.formWindowType}</legend>
-                  <div className={styles.formChoiceGroup}>
-                    <label className={styles.formChoice}>
-                      <input
-                        type="radio"
-                        name="window_type"
-                        value="interior"
-                        checked={windowType === "interior"}
-                        onChange={() => setWindowType("interior")}
-                      />
+                  <div className={styles.formChoiceGroup} role="radiogroup" aria-label={t.contact.formWindowType}>
+                    <button
+                      type="button"
+                      className={`${styles.formChoice} ${windowType === "interior" ? styles.formChoiceActive : ""}`}
+                      role="radio"
+                      aria-checked={windowType === "interior"}
+                      onMouseDown={(event) => event.preventDefault()}
+                      onClick={() => selectWindowType("interior")}
+                    >
+                      <span className={styles.formChoiceMark} aria-hidden="true">
+                        {windowType === "interior" ? "●" : "○"}
+                      </span>
                       <span>{t.contact.formWindowInterior}</span>
-                    </label>
-                    <label className={styles.formChoice}>
-                      <input
-                        type="radio"
-                        name="window_type"
-                        value="exterior"
-                        checked={windowType === "exterior"}
-                        onChange={() => setWindowType("exterior")}
-                      />
+                    </button>
+                    <button
+                      type="button"
+                      className={`${styles.formChoice} ${windowType === "exterior" ? styles.formChoiceActive : ""}`}
+                      role="radio"
+                      aria-checked={windowType === "exterior"}
+                      onMouseDown={(event) => event.preventDefault()}
+                      onClick={() => selectWindowType("exterior")}
+                    >
+                      <span className={styles.formChoiceMark} aria-hidden="true">
+                        {windowType === "exterior" ? "●" : "○"}
+                      </span>
                       <span>{t.contact.formWindowExterior}</span>
-                    </label>
+                    </button>
                   </div>
                 </fieldset>
               )}
