@@ -143,10 +143,8 @@
 .primaryAction:hover,
 .secondaryAction:hover,
 .planButton:hover,
-.teamCard:hover,
 .galleryCard:hover,
 .statCard:hover,
-.principleCard:hover,
 .planCard:hover {
   transform: translateY(-3px);
 }
@@ -320,8 +318,7 @@
   color: #0c5660;
 }
 
-.centerIntro .sectionEyebrow,
-.splitHeading .sectionEyebrow {
+.centerIntro .sectionEyebrow {
   justify-content: center;
   width: 100%;
 }
@@ -340,8 +337,7 @@
   text-align: center;
 }
 
-.centerIntro h2,
-.splitHeading h2 {
+.centerIntro h2 {
   margin: 18px 0 0;
   font-size: clamp(38px, 4vw, 66px);
   line-height: 1.06;
@@ -352,8 +348,7 @@
   color: #0c5660;
 }
 
-.centerIntro p,
-.splitHeading p {
+.centerIntro p {
   margin: 18px auto 0;
   max-width: 720px;
   color: rgba(16, 39, 44, 0.68);
@@ -526,8 +521,6 @@
 }
 
 .statCard,
-.principleCard,
-.teamCard,
 .galleryCard,
 .planCard {
   background: rgba(255, 255, 255, 0.9);
@@ -633,58 +626,6 @@
   color: rgba(16, 39, 44, 0.7);
   font-size: 17px;
   line-height: 1.75;
-}
-
-.teamSection {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.72) 100%);
-}
-
-.splitHeading {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-.splitHeading p {
-  margin: 0;
-  max-width: 460px;
-  text-align: left;
-}
-
-.teamGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
-  margin-top: 34px;
-}
-
-.teamCard {
-  overflow: hidden;
-  border-radius: 28px;
-}
-
-.teamCard img {
-  width: 100%;
-  height: 380px;
-  object-fit: cover;
-}
-
-.teamMeta {
-  padding: 22px 24px 26px;
-}
-
-.teamMeta span {
-  color: rgba(16, 39, 44, 0.56);
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.teamMeta h3 {
-  margin: 10px 0 0;
-  font-size: 30px;
-  letter-spacing: -0.05em;
 }
 
 .gallerySection {
@@ -861,25 +802,6 @@
   border-radius: 24px;
   object-fit: cover;
   box-shadow: 0 16px 34px rgba(16, 39, 44, 0.1);
-}
-
-.processHeading {
-  max-width: 820px;
-}
-
-.processHeading h2 {
-  margin: 18px 0 0;
-  font-size: clamp(38px, 4vw, 66px);
-  line-height: 1.06;
-  letter-spacing: -0.06em;
-}
-
-.processHeading p {
-  margin: 18px 0 0;
-  max-width: 720px;
-  color: rgba(16, 39, 44, 0.68);
-  font-size: 18px;
-  line-height: 1.7;
 }
 
 .serviceSelector,
@@ -1434,8 +1356,7 @@
     grid-template-columns: 1fr;
   }
 
-  .heroInner,
-  .splitHeading {
+  .heroInner {
     flex-direction: column;
   }
 
@@ -1453,8 +1374,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .planGrid,
-  .teamGrid {
+  .planGrid {
     grid-template-columns: 1fr;
   }
 
@@ -1591,9 +1511,6 @@
   .centerIntro,
   .centerIntro h2,
   .centerIntro p,
-  .processHeading,
-  .processHeading h2,
-  .processHeading p,
   .heroLead h1 {
     max-width: 100%;
     overflow-wrap: anywhere;
@@ -1693,17 +1610,11 @@
     padding: 42px 0;
   }
 
-  .centerIntro h2,
-  .splitHeading h2 {
+  .centerIntro h2 {
     font-size: clamp(32px, 9vw, 44px);
   }
 
-  .splitHeading {
-    align-items: flex-start;
-  }
-
   .statsGrid,
-  .principlesGrid,
   .galleryGrid,
   .footerGallery {
     grid-template-columns: 1fr;
@@ -1711,14 +1622,6 @@
 
   .statCard {
     min-height: auto;
-  }
-
-  .principleCard h3 {
-    font-size: 24px;
-  }
-
-  .teamCard img {
-    height: 280px;
   }
 
   .planHeader strong {
