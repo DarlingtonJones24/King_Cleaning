@@ -481,10 +481,10 @@
   display: block;
   width: 100%;
   max-width: 100%;
-  height: min(560px, 72vh);
-  min-height: 420px;
-  object-fit: cover;
-  object-position: center top;
+  height: auto;
+  max-height: min(480px, 65vh);
+  object-fit: contain;
+  object-position: center;
 }
 
 .founderCaption {
@@ -1668,8 +1668,7 @@
   }
 
   .founderCard img {
-    height: min(420px, 78vw);
-    min-height: 320px;
+    max-height: min(380px, 72vw);
   }
 
   .aboutPillar {
