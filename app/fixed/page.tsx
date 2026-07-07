@@ -641,7 +641,6 @@ export default function FixedHomePage() {
           <header className={`${styles.header} ${menuOpen ? styles.headerMenuOpen : ""}`}>
             <a className={styles.brand} href="#home" onClick={(event) => navigateToSection(event, "home")} aria-label="King Cleaning B.V">
               <img className={styles.brandLogoFull} src="/King-Logo.png" alt="" />
-              <img className={styles.brandIcon} src="/king-cleaning-logo.svg" alt="" aria-hidden="true" />
               <span className={styles.brandText}>King Cleaning B.V</span>
             </a>
             <nav className={styles.nav} aria-label="Main navigation">

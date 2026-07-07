@@ -77,7 +77,6 @@
   object-position: left center;
 }
 
-.brandIcon,
 .brandText {
   display: none;
 }
@@ -1402,28 +1401,37 @@
     min-height: 56px;
     margin-inline: 0;
     padding: max(8px, env(safe-area-inset-top)) 16px 8px;
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(14px);
+    background: transparent;
+    isolation: isolate;
     border-bottom: 1px solid rgba(12, 86, 96, 0.06);
     box-shadow: 0 6px 24px rgba(16, 39, 44, 0.06);
   }
 
+  .header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
   .brand {
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     min-width: 0;
+    max-width: calc(100% - 56px);
     align-items: center;
     gap: 10px;
   }
 
   .brandLogoFull {
-    display: none;
-  }
-
-  .brandIcon {
     display: block;
-    width: 40px;
-    height: 40px;
-    flex: 0 0 40px;
+    height: 36px;
+    max-width: 108px;
+    width: auto;
+    object-fit: contain;
+    object-position: left center;
   }
 
   .brandText {
@@ -1431,9 +1439,10 @@
     min-width: 0;
     overflow: hidden;
     color: #0c5660;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 800;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -1660,8 +1669,13 @@
 }
 
 @media (max-width: 480px) {
-  .brand span {
-    display: none;
+  .brandLogoFull {
+    height: 32px;
+    max-width: 92px;
+  }
+
+  .brandText {
+    font-size: 13px;
   }
 
   .heroCard,
