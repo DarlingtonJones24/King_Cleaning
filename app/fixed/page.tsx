@@ -35,7 +35,7 @@ const content = {
       eyebrow: "Over King Cleaning",
       headline: "Schone ruimtes. Sterkere bedrijven.",
       text: "Onder leiding van King Prosper bieden wij professionele schoonmaakdiensten voor bedrijven van elk type, waaronder ziekenhuizen, kantoren, restaurants, winkelruimtes en commerciele locaties in Amsterdam.",
-      founderTitle: "Oprichter, King Cleaning",
+      founderTitle: "Professioneel schoonmaakteam",
       aboutUsTitle: "Over ons",
       aboutUsText:
         "Wij helpen organisaties in Amsterdam met betrouwbare schoonmaak, duidelijke afspraken en vaste teams die uw locatie representeren.",
@@ -109,11 +109,11 @@ const content = {
       eyebrow: "Diensten",
       title: "Prijzen & pakketten",
       text: "Duidelijke starttarieven per uur, met maatwerk voor grotere of complexere locaties.",
-      selectorTitle: "Selecteer uw diensten",
-      selectorHint: "Kies een of meerdere diensten. Uw selectie wordt meegestuurd met de aanvraag.",
-      summaryTitle: "Geselecteerde diensten",
-      summaryEmpty: "Nog geen diensten geselecteerd.",
-      pricingPrompt: "Selecteer hierboven een of meerdere diensten om de bijbehorende tarieven te bekijken.",
+      selectorTitle: "Selecteer uw dienst",
+      selectorHint: "Kies één dienst. Uw selectie wordt meegestuurd met de aanvraag.",
+      summaryTitle: "Geselecteerde dienst",
+      summaryEmpty: "Nog geen dienst geselecteerd.",
+      pricingPrompt: "Selecteer hierboven een dienst om de bijbehorende tarieven te bekijken.",
       options: {
         general: "Algemene schoonmaak",
         deep: "Dieptereiniging",
@@ -143,7 +143,18 @@ const content = {
       formName: "Naam",
       formEmail: "E-mail",
       formPhone: "Telefoon",
-      formMessage: "Bericht",
+      formService: "Type dienst",
+      formSquareMeters: "Oppervlakte (m²)",
+      formWindowType: "Glasbewassing",
+      formWindowInterior: "Binnenramen",
+      formWindowExterior: "Buitenramen",
+      formEstimateTitle: "Geschatte startprijs",
+      formEstimateHint: "Indicatieve prijs op basis van uw oppervlakte en geselecteerde dienst.",
+      formEstimateCustom: "Maatwerk offerte — wij nemen contact met u op voor een exacte prijs.",
+      formEstimateCleaners: "Schoonmakers",
+      formEstimateTime: "Geschatte tijd",
+      formEstimateTier: "Tariefklasse",
+      formMessage: "Extra opmerkingen (optioneel)",
       formSubmit: "Aanvraag versturen",
       formSending: "Versturen…",
       formSuccess: "Bedankt! Uw bericht is verzonden naar info@kingcleaning.nl. Wij reageren binnen 24 uur.",
@@ -167,7 +178,7 @@ const content = {
       eyebrow: "About King Cleaning",
       headline: "Clean Spaces. Stronger Businesses.",
       text: "Led by King Prosper, we provide professional cleaning services for businesses of all types, including hospitals, offices, restaurants, retail spaces, and commercial facilities in Amsterdam.",
-      founderTitle: "Founder, King Cleaning",
+      founderTitle: "Professional cleaning team",
       aboutUsTitle: "About Us",
       aboutUsText:
         "We help Amsterdam organisations with reliable cleaning, clear agreements, and dedicated teams that represent your location professionally.",
@@ -241,11 +252,11 @@ const content = {
       eyebrow: "Services",
       title: "Pricing & Packages",
       text: "Clear hourly starting rates, with customised quotes for larger or more complex buildings.",
-      selectorTitle: "Select your services",
-      selectorHint: "Choose one or more services. Your selection is included with your request.",
-      summaryTitle: "Selected services",
-      summaryEmpty: "No services selected yet.",
-      pricingPrompt: "Select one or more services above to view the matching rates and details.",
+      selectorTitle: "Select your service",
+      selectorHint: "Choose one service. Your selection is included with your request.",
+      summaryTitle: "Selected service",
+      summaryEmpty: "No service selected yet.",
+      pricingPrompt: "Select a service above to view the matching rates and details.",
       options: {
         general: "General Cleaning",
         deep: "Deep Cleaning",
@@ -275,7 +286,18 @@ const content = {
       formName: "Name",
       formEmail: "Email",
       formPhone: "Phone",
-      formMessage: "Message",
+      formService: "Service type",
+      formSquareMeters: "Floor area (m²)",
+      formWindowType: "Window cleaning",
+      formWindowInterior: "Interior windows",
+      formWindowExterior: "Exterior windows",
+      formEstimateTitle: "Estimated starting price",
+      formEstimateHint: "Indicative price based on your floor area and selected service.",
+      formEstimateCustom: "Custom quote — we will contact you with an exact price.",
+      formEstimateCleaners: "Cleaners",
+      formEstimateTime: "Estimated time",
+      formEstimateTier: "Pricing tier",
+      formMessage: "Additional notes (optional)",
       formSubmit: "Send Request",
       formSending: "Sending…",
       formSuccess: "Thank you! Your message was sent to info@kingcleaning.nl. We will respond within 24 hours.",
@@ -376,6 +398,68 @@ const additionalCharges = [
 
 const serviceOrder: ServiceKey[] = ["general", "deep", "window"];
 
+type WindowType = "interior" | "exterior";
+
+type QuoteResult = {
+  tierLabel: string;
+  cleaners: string | null;
+  time: string;
+  price: string;
+  isCustomQuote: boolean;
+};
+
+const standardTierBounds = [250, 500, 750, 1000, 1500, 2500, 4000];
+const windowTierBounds = [250, 500, 1000, 2000];
+
+function getTierIndex(sqm: number, bounds: number[]) {
+  if (!Number.isFinite(sqm) || sqm <= 0) return -1;
+  for (let index = 0; index < bounds.length; index += 1) {
+    if (sqm <= bounds[index]) return index;
+  }
+  return bounds.length;
+}
+
+function getStandardQuote(service: "general" | "deep", sqm: number): QuoteResult | null {
+  const tierIndex = getTierIndex(sqm, standardTierBounds);
+  if (tierIndex < 0) return null;
+
+  const rows = service === "general" ? generalPricing.rows : deepPricing.rows;
+  const row = rows[tierIndex];
+  if (!row) return null;
+
+  const price = row[3];
+  return {
+    tierLabel: row[0],
+    cleaners: row[1],
+    time: row[2],
+    price,
+    isCustomQuote: price.toLowerCase().includes("custom")
+  };
+}
+
+function getWindowQuote(windowType: WindowType, sqm: number): QuoteResult | null {
+  const tierIndex = getTierIndex(sqm, windowTierBounds);
+  if (tierIndex < 0) return null;
+
+  const rows = windowType === "interior" ? interiorWindowPricing.rows : exteriorWindowPricing.rows;
+  const row = rows[tierIndex];
+  if (!row) return null;
+
+  const price = row[2];
+  return {
+    tierLabel: row[0],
+    cleaners: null,
+    time: row[1],
+    price,
+    isCustomQuote: price.toLowerCase().includes("custom")
+  };
+}
+
+function getServiceQuote(service: ServiceKey, sqm: number, windowType: WindowType): QuoteResult | null {
+  if (service === "window") return getWindowQuote(windowType, sqm);
+  return getStandardQuote(service, sqm);
+}
+
 function AboutPillarIcon({ type }: { type: "about" | "mission" | "vision" }) {
   if (type === "about") {
     return (
@@ -408,7 +492,9 @@ function AboutPillarIcon({ type }: { type: "about" | "mission" | "vision" }) {
 export default function FixedHomePage() {
   const [language, setLanguage] = useState<Language>("nl");
   const [menuOpen, setMenuOpen] = useState(false);
-  const [selectedServices, setSelectedServices] = useState<ServiceKey[]>([]);
+  const [selectedService, setSelectedService] = useState<ServiceKey | null>(null);
+  const [squareMeters, setSquareMeters] = useState("");
+  const [windowType, setWindowType] = useState<WindowType>("interior");
   const [message, setMessage] = useState("");
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const menuToggleRef = useRef<HTMLButtonElement>(null);
@@ -434,13 +520,39 @@ export default function FixedHomePage() {
     window.scrollTo({ top, behavior: "smooth" });
   };
 
-  const toggleService = (key: ServiceKey) => {
-    setSelectedServices((current) =>
-      current.includes(key) ? current.filter((item) => item !== key) : [...current, key]
-    );
+  const selectService = (key: ServiceKey) => {
+    setSelectedService(key);
   };
 
-  const selectedSummary = selectedServices.map((key) => s.options[key]).join(", ");
+  const parsedSquareMeters = Number.parseFloat(squareMeters);
+  const selectedSummary = selectedService ? s.options[selectedService] : "";
+  const quote =
+    selectedService && parsedSquareMeters > 0
+      ? getServiceQuote(selectedService, parsedSquareMeters, windowType)
+      : null;
+
+  const formatQuoteSummary = () => {
+    if (!selectedService || !quote) return "";
+
+    const windowLabel =
+      selectedService === "window"
+        ? windowType === "interior"
+          ? s.formWindowInterior
+          : s.formWindowExterior
+        : null;
+
+    const lines = [
+      `${language === "nl" ? "Dienst" : "Service"}: ${selectedSummary}`,
+      `${language === "nl" ? "Oppervlakte" : "Floor area"}: ${parsedSquareMeters} m²`,
+      windowLabel ? `${s.formWindowType}: ${windowLabel}` : null,
+      `${t.contact.formEstimateTier}: ${quote.tierLabel}`,
+      quote.cleaners ? `${t.contact.formEstimateCleaners}: ${quote.cleaners}` : null,
+      `${t.contact.formEstimateTime}: ${quote.time}`,
+      `${t.contact.formEstimateTitle}: ${quote.isCustomQuote ? t.contact.formEstimateCustom : quote.price}`
+    ].filter(Boolean);
+
+    return lines.join("\n");
+  };
 
   const aboutPillars = [
     { type: "about" as const, title: t.about.aboutUsTitle, text: t.about.aboutUsText },
@@ -450,7 +562,7 @@ export default function FixedHomePage() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!selectedServices.length || formStatus === "sending") return;
+    if (!selectedService || parsedSquareMeters <= 0 || !quote || formStatus === "sending") return;
 
     const form = event.currentTarget;
     const honey = (form.elements.namedItem("_honey") as HTMLInputElement | null)?.value;
@@ -459,15 +571,12 @@ export default function FixedHomePage() {
     const name = (form.elements.namedItem("name") as HTMLInputElement).value.trim();
     const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim();
     const phone = (form.elements.namedItem("phone") as HTMLInputElement).value.trim();
-    const prefix =
-      language === "nl"
-        ? `Geselecteerde diensten: ${selectedSummary}\n\n`
-        : `Selected services: ${selectedSummary}\n\n`;
-    const fullMessage = `${prefix}${message}`.trim();
+    const quoteSummary = formatQuoteSummary();
+    const fullMessage = [quoteSummary, message.trim()].filter(Boolean).join("\n\n");
     const subject =
       language === "nl"
-        ? `Nieuwe aanvraag — ${selectedSummary}`
-        : `New request — ${selectedSummary}`;
+        ? `Nieuwe aanvraag — ${selectedSummary} (${parsedSquareMeters} m²)`
+        : `New request — ${selectedSummary} (${parsedSquareMeters} m²)`;
 
     setFormStatus("sending");
     try {
@@ -476,7 +585,21 @@ export default function FixedHomePage() {
       body.append("email", email);
       body.append("phone", phone);
       body.append("message", fullMessage);
-      body.append("selected_services", selectedSummary);
+      body.append("service_type", selectedSummary);
+      body.append("square_meters", String(parsedSquareMeters));
+      body.append(
+        "estimated_price",
+        quote.isCustomQuote ? t.contact.formEstimateCustom : quote.price
+      );
+      body.append("pricing_tier", quote.tierLabel);
+      body.append("estimated_time", quote.time);
+      if (quote.cleaners) body.append("cleaners_required", quote.cleaners);
+      if (selectedService === "window") {
+        body.append(
+          "window_type",
+          windowType === "interior" ? s.formWindowInterior : s.formWindowExterior
+        );
+      }
       body.append("_subject", subject);
       body.append("_template", "table");
       body.append("_replyto", email);
@@ -490,6 +613,7 @@ export default function FixedHomePage() {
       if (!res.ok) throw new Error("submit failed");
       setFormStatus("success");
       setMessage("");
+      setSquareMeters("");
       form.reset();
     } catch {
       setFormStatus("error");
@@ -719,9 +843,9 @@ export default function FixedHomePage() {
 
             <figure className={styles.founderCard}>
               <div className={styles.founderImageWrap}>
-                <img src={images.founder} alt="King Prosper Asem" />
+                <img src={images.founder} alt="King Cleaning professional team" />
                 <figcaption className={styles.founderCaption}>
-                  <strong>King Prosper Asem</strong>
+                  <strong>King Cleaning</strong>
                   <span>{t.about.founderTitle}</span>
                 </figcaption>
               </div>
@@ -753,18 +877,19 @@ export default function FixedHomePage() {
               <h3>{s.selectorTitle}</h3>
               <p>{s.selectorHint}</p>
             </div>
-            <div className={styles.serviceOptions}>
+            <div className={styles.serviceOptions} role="radiogroup" aria-label={s.selectorTitle}>
               {serviceOrder.map((key) => {
-                const active = selectedServices.includes(key);
+                const active = selectedService === key;
                 return (
                   <button
                     key={key}
                     type="button"
                     className={`${styles.serviceOption} ${active ? styles.serviceOptionActive : ""}`}
-                    aria-pressed={active}
-                    onClick={() => toggleService(key)}
+                    role="radio"
+                    aria-checked={active}
+                    onClick={() => selectService(key)}
                   >
-                    <span className={styles.serviceOptionCheck}>{active ? "✓" : "+"}</span>
+                    <span className={styles.serviceOptionCheck} aria-hidden="true">{active ? "●" : "○"}</span>
                     <span>{s.options[key]}</span>
                   </button>
                 );
@@ -777,17 +902,17 @@ export default function FixedHomePage() {
           </div>
 
           <div className={styles.pricingResults}>
-            {selectedServices.length === 0 ? (
+            {!selectedService ? (
               <p className={styles.pricingPrompt}>{s.pricingPrompt}</p>
             ) : (
               <>
-                {selectedServices.includes("general") &&
+                {selectedService === "general" &&
                   renderPricingTable(s.options.general, generalPricing.rate, generalPricing.rows, generalPricing.includes)}
 
-                {selectedServices.includes("deep") &&
+                {selectedService === "deep" &&
                   renderPricingTable(s.options.deep, deepPricing.rate, deepPricing.rows, deepPricing.includes)}
 
-                {selectedServices.includes("window") && (
+                {selectedService === "window" && (
                   <article className={styles.pricingBlock}>
                     <div className={styles.pricingHeader}>
                       <h3>{s.options.window}</h3>
@@ -932,14 +1057,98 @@ export default function FixedHomePage() {
                 <input name="phone" type="tel" autoComplete="tel" />
               </label>
               <label>
-                <span>{t.contact.formMessage}</span>
-                <textarea name="message" rows={4} value={message} onChange={(event) => setMessage(event.target.value)} required />
+                <span>{t.contact.formService}</span>
+                <select
+                  name="service_type"
+                  value={selectedService ?? ""}
+                  onChange={(event) => setSelectedService(event.target.value as ServiceKey)}
+                  required
+                >
+                  <option value="" disabled>
+                    {s.summaryEmpty}
+                  </option>
+                  {serviceOrder.map((key) => (
+                    <option key={key} value={key}>
+                      {s.options[key]}
+                    </option>
+                  ))}
+                </select>
               </label>
-              <div className={styles.formSummary}>
-                <strong>{s.summaryTitle}</strong>
-                <p>{selectedSummary || s.summaryEmpty}</p>
-              </div>
-              <button className={styles.primaryAction} type="submit" disabled={!selectedServices.length || formStatus === "sending"}>
+              <label>
+                <span>{t.contact.formSquareMeters}</span>
+                <input
+                  name="square_meters"
+                  type="number"
+                  min={1}
+                  step={1}
+                  inputMode="numeric"
+                  placeholder="250"
+                  value={squareMeters}
+                  onChange={(event) => setSquareMeters(event.target.value)}
+                  required
+                />
+              </label>
+              {selectedService === "window" && (
+                <fieldset className={styles.formFieldset}>
+                  <legend>{t.contact.formWindowType}</legend>
+                  <div className={styles.formChoiceGroup}>
+                    <label className={styles.formChoice}>
+                      <input
+                        type="radio"
+                        name="window_type"
+                        value="interior"
+                        checked={windowType === "interior"}
+                        onChange={() => setWindowType("interior")}
+                      />
+                      <span>{s.formWindowInterior}</span>
+                    </label>
+                    <label className={styles.formChoice}>
+                      <input
+                        type="radio"
+                        name="window_type"
+                        value="exterior"
+                        checked={windowType === "exterior"}
+                        onChange={() => setWindowType("exterior")}
+                      />
+                      <span>{s.formWindowExterior}</span>
+                    </label>
+                  </div>
+                </fieldset>
+              )}
+              {quote && (
+                <div className={styles.formQuoteEstimate}>
+                  <strong>{t.contact.formEstimateTitle}</strong>
+                  <p className={styles.formQuotePrice}>
+                    {quote.isCustomQuote ? t.contact.formEstimateCustom : quote.price}
+                  </p>
+                  <ul className={styles.formQuoteDetails}>
+                    <li>
+                      <span>{t.contact.formEstimateTier}</span>
+                      <strong>{quote.tierLabel}</strong>
+                    </li>
+                    {quote.cleaners && (
+                      <li>
+                        <span>{t.contact.formEstimateCleaners}</span>
+                        <strong>{quote.cleaners}</strong>
+                      </li>
+                    )}
+                    <li>
+                      <span>{t.contact.formEstimateTime}</span>
+                      <strong>{quote.time}</strong>
+                    </li>
+                  </ul>
+                  <p className={styles.formQuoteHint}>{t.contact.formEstimateHint}</p>
+                </div>
+              )}
+              <label>
+                <span>{t.contact.formMessage}</span>
+                <textarea name="message" rows={4} value={message} onChange={(event) => setMessage(event.target.value)} />
+              </label>
+              <button
+                className={styles.primaryAction}
+                type="submit"
+                disabled={!selectedService || parsedSquareMeters <= 0 || !quote || formStatus === "sending"}
+              >
                 {formStatus === "sending" ? t.contact.formSending : t.contact.formSubmit}
               </button>
             </form>

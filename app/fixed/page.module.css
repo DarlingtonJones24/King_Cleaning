@@ -868,7 +868,8 @@
   height: 28px;
   border-radius: 999px;
   background: rgba(12, 86, 96, 0.1);
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 1;
 }
 
 .serviceOptionActive .serviceOptionCheck {
@@ -1084,7 +1085,8 @@
 }
 
 .contactForm input,
-.contactForm textarea {
+.contactForm textarea,
+.contactForm select {
   width: 100%;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 16px;
@@ -1096,18 +1098,131 @@
   padding: 12px 14px;
 }
 
+.contactForm select {
+  cursor: pointer;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.72) 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.72) 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(50% + 2px),
+    calc(100% - 12px) calc(50% + 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 34px;
+}
+
+.contactForm select option {
+  color: #10272c;
+  background: #ffffff;
+}
+
 .contactForm label:has(textarea),
-.contactForm .formSummary,
+.contactForm .formFieldset,
+.contactForm .formQuoteEstimate,
 .contactForm button {
   grid-column: 1 / -1;
 }
 
-.formSummary {
-  color: rgba(255, 255, 255, 0.88);
+.formFieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
-.formSummary p {
-  color: rgba(255, 255, 255, 0.76);
+.formFieldset legend {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.formChoiceGroup {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.formChoice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+}
+
+.formChoice input {
+  width: auto;
+  margin: 0;
+  accent-color: #7ed8c7;
+}
+
+.formQuoteEstimate {
+  padding: 18px;
+  border: 1px solid rgba(126, 216, 199, 0.28);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.formQuoteEstimate strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.formQuotePrice {
+  margin: 10px 0 0;
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+}
+
+.formQuoteDetails {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.formQuoteDetails li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 14px;
+}
+
+.formQuoteDetails span {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.formQuoteDetails strong {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #ffffff;
+}
+
+.formQuoteHint {
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 13px;
+  line-height: 1.55;
 }
 
 .contactForm textarea {
@@ -1116,7 +1231,8 @@
 }
 
 .contactForm input:focus,
-.contactForm textarea:focus {
+.contactForm textarea:focus,
+.contactForm select:focus {
   border-color: rgba(126, 216, 199, 0.72);
   box-shadow: 0 0 0 4px rgba(126, 216, 199, 0.16);
 }
