@@ -146,7 +146,7 @@ const content = {
       formService: "Type dienst",
       formServiceHint: "Kies een of meerdere diensten",
       formSquareMeters: "Oppervlakte (m²)",
-      formWindowType: "Glasbewassing",
+      formWindowType: "Type glasbewassing",
       formWindowInterior: "Binnenramen",
       formWindowExterior: "Buitenramen",
       formEstimateTitle: "Geschatte startprijs",
@@ -291,7 +291,7 @@ const content = {
       formService: "Service type",
       formServiceHint: "Select one or more services",
       formSquareMeters: "Floor area (m²)",
-      formWindowType: "Window cleaning",
+      formWindowType: "Window cleaning type",
       formWindowInterior: "Interior windows",
       formWindowExterior: "Exterior windows",
       formEstimateTitle: "Estimated starting price",
@@ -572,7 +572,7 @@ export default function FixedHomePage() {
 
     if (formServices.includes("window")) {
       header.push(
-        `${s.formWindowType}: ${windowType === "interior" ? s.formWindowInterior : s.formWindowExterior}`
+        `${t.contact.formWindowType}: ${windowType === "interior" ? t.contact.formWindowInterior : t.contact.formWindowExterior}`
       );
     }
 
@@ -641,7 +641,7 @@ export default function FixedHomePage() {
       if (formServices.includes("window")) {
         body.append(
           "window_type",
-          windowType === "interior" ? s.formWindowInterior : s.formWindowExterior
+          windowType === "interior" ? t.contact.formWindowInterior : t.contact.formWindowExterior
         );
       }
       body.append("_subject", subject);
@@ -1148,7 +1148,7 @@ export default function FixedHomePage() {
                         checked={windowType === "interior"}
                         onChange={() => setWindowType("interior")}
                       />
-                      <span>{s.formWindowInterior}</span>
+                      <span>{t.contact.formWindowInterior}</span>
                     </label>
                     <label className={styles.formChoice}>
                       <input
@@ -1158,7 +1158,7 @@ export default function FixedHomePage() {
                         checked={windowType === "exterior"}
                         onChange={() => setWindowType("exterior")}
                       />
-                      <span>{s.formWindowExterior}</span>
+                      <span>{t.contact.formWindowExterior}</span>
                     </label>
                   </div>
                 </fieldset>
