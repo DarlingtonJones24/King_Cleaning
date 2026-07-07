@@ -144,11 +144,13 @@ const content = {
       formEmail: "E-mail",
       formPhone: "Telefoon",
       formService: "Type dienst",
+      formServiceHint: "Kies een of meerdere diensten",
       formSquareMeters: "Oppervlakte (m²)",
       formWindowType: "Glasbewassing",
       formWindowInterior: "Binnenramen",
       formWindowExterior: "Buitenramen",
       formEstimateTitle: "Geschatte startprijs",
+      formEstimateTotal: "Totaal indicatie",
       formEstimateHint: "Indicatieve prijs op basis van uw oppervlakte en geselecteerde dienst.",
       formEstimateCustom: "Maatwerk offerte — wij nemen contact met u op voor een exacte prijs.",
       formEstimateCleaners: "Schoonmakers",
@@ -287,11 +289,13 @@ const content = {
       formEmail: "Email",
       formPhone: "Phone",
       formService: "Service type",
+      formServiceHint: "Select one or more services",
       formSquareMeters: "Floor area (m²)",
       formWindowType: "Window cleaning",
       formWindowInterior: "Interior windows",
       formWindowExterior: "Exterior windows",
       formEstimateTitle: "Estimated starting price",
+      formEstimateTotal: "Estimated total",
       formEstimateHint: "Indicative price based on your floor area and selected service.",
       formEstimateCustom: "Custom quote — we will contact you with an exact price.",
       formEstimateCleaners: "Cleaners",
@@ -460,6 +464,12 @@ function getServiceQuote(service: ServiceKey, sqm: number, windowType: WindowTyp
   return getStandardQuote(service, sqm);
 }
 
+function parseEuroPrice(price: string) {
+  const match = price.match(/€([\d,.]+)/);
+  if (!match) return null;
+  return Number.parseFloat(match[1].replace(/\./g, "").replace(",", "."));
+}
+
 function AboutPillarIcon({ type }: { type: "about" | "mission" | "vision" }) {
   if (type === "about") {
     return (
@@ -493,6 +503,7 @@ export default function FixedHomePage() {
   const [language, setLanguage] = useState<Language>("nl");
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<ServiceKey | null>(null);
+  const [formServices, setFormServices] = useState<ServiceKey[]>([]);
   const [squareMeters, setSquareMeters] = useState("");
   const [windowType, setWindowType] = useState<WindowType>("interior");
   const [message, setMessage] = useState("");
@@ -522,36 +533,69 @@ export default function FixedHomePage() {
 
   const selectService = (key: ServiceKey) => {
     setSelectedService(key);
+    setFormServices((current) => (current.includes(key) ? current : [...current, key]));
+  };
+
+  const toggleFormService = (key: ServiceKey) => {
+    setFormServices((current) =>
+      current.includes(key) ? current.filter((item) => item !== key) : [...current, key]
+    );
   };
 
   const parsedSquareMeters = Number.parseFloat(squareMeters);
   const selectedSummary = selectedService ? s.options[selectedService] : "";
-  const quote =
-    selectedService && parsedSquareMeters > 0
-      ? getServiceQuote(selectedService, parsedSquareMeters, windowType)
-      : null;
+  const formServicesSummary = formServices.map((key) => s.options[key]).join(", ");
+  const formQuotes = formServices
+    .map((service) => ({
+      service,
+      label: s.options[service],
+      quote:
+        parsedSquareMeters > 0 ? getServiceQuote(service, parsedSquareMeters, windowType) : null
+    }))
+    .filter((item): item is { service: ServiceKey; label: string; quote: QuoteResult } => !!item.quote);
+
+  const numericQuoteTotal = formQuotes.reduce((total, item) => {
+    if (item.quote.isCustomQuote) return total;
+    const value = parseEuroPrice(item.quote.price);
+    return value === null ? total : total + value;
+  }, 0);
+
+  const hasCustomQuote = formQuotes.some((item) => item.quote.isCustomQuote);
 
   const formatQuoteSummary = () => {
-    if (!selectedService || !quote) return "";
+    if (!formServices.length || !formQuotes.length) return "";
 
-    const windowLabel =
-      selectedService === "window"
-        ? windowType === "interior"
-          ? s.formWindowInterior
-          : s.formWindowExterior
-        : null;
+    const header = [
+      `${language === "nl" ? "Diensten" : "Services"}: ${formServicesSummary}`,
+      `${language === "nl" ? "Oppervlakte" : "Floor area"}: ${parsedSquareMeters} m²`
+    ];
 
-    const lines = [
-      `${language === "nl" ? "Dienst" : "Service"}: ${selectedSummary}`,
-      `${language === "nl" ? "Oppervlakte" : "Floor area"}: ${parsedSquareMeters} m²`,
-      windowLabel ? `${s.formWindowType}: ${windowLabel}` : null,
-      `${t.contact.formEstimateTier}: ${quote.tierLabel}`,
-      quote.cleaners ? `${t.contact.formEstimateCleaners}: ${quote.cleaners}` : null,
-      `${t.contact.formEstimateTime}: ${quote.time}`,
-      `${t.contact.formEstimateTitle}: ${quote.isCustomQuote ? t.contact.formEstimateCustom : quote.price}`
-    ].filter(Boolean);
+    if (formServices.includes("window")) {
+      header.push(
+        `${s.formWindowType}: ${windowType === "interior" ? s.formWindowInterior : s.formWindowExterior}`
+      );
+    }
 
-    return lines.join("\n");
+    const serviceBlocks = formQuotes.map((item) => {
+      const lines = [
+        `— ${item.label}`,
+        `${t.contact.formEstimateTier}: ${item.quote.tierLabel}`,
+        item.quote.cleaners ? `${t.contact.formEstimateCleaners}: ${item.quote.cleaners}` : null,
+        `${t.contact.formEstimateTime}: ${item.quote.time}`,
+        `${t.contact.formEstimateTitle}: ${item.quote.isCustomQuote ? t.contact.formEstimateCustom : item.quote.price}`
+      ].filter(Boolean);
+
+      return lines.join("\n");
+    });
+
+    const totalLine =
+      !hasCustomQuote && numericQuoteTotal > 0
+        ? `\n${t.contact.formEstimateTotal}: €${numericQuoteTotal.toLocaleString(language === "nl" ? "nl-NL" : "en-GB")}`
+        : hasCustomQuote
+          ? `\n${t.contact.formEstimateTotal}: ${t.contact.formEstimateCustom}`
+          : "";
+
+    return [...header, "", ...serviceBlocks].join("\n") + totalLine;
   };
 
   const aboutPillars = [
@@ -562,7 +606,7 @@ export default function FixedHomePage() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!selectedService || parsedSquareMeters <= 0 || !quote || formStatus === "sending") return;
+    if (!formServices.length || parsedSquareMeters <= 0 || !formQuotes.length || formStatus === "sending") return;
 
     const form = event.currentTarget;
     const honey = (form.elements.namedItem("_honey") as HTMLInputElement | null)?.value;
@@ -575,8 +619,8 @@ export default function FixedHomePage() {
     const fullMessage = [quoteSummary, message.trim()].filter(Boolean).join("\n\n");
     const subject =
       language === "nl"
-        ? `Nieuwe aanvraag — ${selectedSummary} (${parsedSquareMeters} m²)`
-        : `New request — ${selectedSummary} (${parsedSquareMeters} m²)`;
+        ? `Nieuwe aanvraag — ${formServicesSummary} (${parsedSquareMeters} m²)`
+        : `New request — ${formServicesSummary} (${parsedSquareMeters} m²)`;
 
     setFormStatus("sending");
     try {
@@ -585,16 +629,16 @@ export default function FixedHomePage() {
       body.append("email", email);
       body.append("phone", phone);
       body.append("message", fullMessage);
-      body.append("service_type", selectedSummary);
+      body.append("service_type", formServicesSummary);
       body.append("square_meters", String(parsedSquareMeters));
       body.append(
         "estimated_price",
-        quote.isCustomQuote ? t.contact.formEstimateCustom : quote.price
+        hasCustomQuote
+          ? t.contact.formEstimateCustom
+          : `€${numericQuoteTotal.toLocaleString(language === "nl" ? "nl-NL" : "en-GB")}`
       );
-      body.append("pricing_tier", quote.tierLabel);
-      body.append("estimated_time", quote.time);
-      if (quote.cleaners) body.append("cleaners_required", quote.cleaners);
-      if (selectedService === "window") {
+      body.append("quote_details", quoteSummary);
+      if (formServices.includes("window")) {
         body.append(
           "window_type",
           windowType === "interior" ? s.formWindowInterior : s.formWindowExterior
@@ -614,6 +658,7 @@ export default function FixedHomePage() {
       setFormStatus("success");
       setMessage("");
       setSquareMeters("");
+      setFormServices([]);
       form.reset();
     } catch {
       setFormStatus("error");
@@ -1056,24 +1101,27 @@ export default function FixedHomePage() {
                 <span>{t.contact.formPhone}</span>
                 <input name="phone" type="tel" autoComplete="tel" />
               </label>
-              <label>
-                <span>{t.contact.formService}</span>
-                <select
-                  name="service_type"
-                  value={selectedService ?? ""}
-                  onChange={(event) => setSelectedService(event.target.value as ServiceKey)}
-                  required
-                >
-                  <option value="" disabled>
-                    {s.summaryEmpty}
-                  </option>
-                  {serviceOrder.map((key) => (
-                    <option key={key} value={key}>
-                      {s.options[key]}
-                    </option>
-                  ))}
-                </select>
-              </label>
+              <fieldset className={styles.formFieldset}>
+                <legend>{t.contact.formService}</legend>
+                <p className={styles.formFieldHint}>{t.contact.formServiceHint}</p>
+                <div className={styles.formServiceGroup}>
+                  {serviceOrder.map((key) => {
+                    const active = formServices.includes(key);
+                    return (
+                      <label key={key} className={`${styles.formServiceOption} ${active ? styles.formServiceOptionActive : ""}`}>
+                        <input
+                          type="checkbox"
+                          name="service_type"
+                          value={key}
+                          checked={active}
+                          onChange={() => toggleFormService(key)}
+                        />
+                        <span>{s.options[key]}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </fieldset>
               <label>
                 <span>{t.contact.formSquareMeters}</span>
                 <input
@@ -1088,7 +1136,7 @@ export default function FixedHomePage() {
                   required
                 />
               </label>
-              {selectedService === "window" && (
+              {formServices.includes("window") && (
                 <fieldset className={styles.formFieldset}>
                   <legend>{t.contact.formWindowType}</legend>
                   <div className={styles.formChoiceGroup}>
@@ -1115,28 +1163,41 @@ export default function FixedHomePage() {
                   </div>
                 </fieldset>
               )}
-              {quote && (
+              {formQuotes.length > 0 && (
                 <div className={styles.formQuoteEstimate}>
                   <strong>{t.contact.formEstimateTitle}</strong>
-                  <p className={styles.formQuotePrice}>
-                    {quote.isCustomQuote ? t.contact.formEstimateCustom : quote.price}
-                  </p>
-                  <ul className={styles.formQuoteDetails}>
-                    <li>
-                      <span>{t.contact.formEstimateTier}</span>
-                      <strong>{quote.tierLabel}</strong>
-                    </li>
-                    {quote.cleaners && (
-                      <li>
-                        <span>{t.contact.formEstimateCleaners}</span>
-                        <strong>{quote.cleaners}</strong>
-                      </li>
-                    )}
-                    <li>
-                      <span>{t.contact.formEstimateTime}</span>
-                      <strong>{quote.time}</strong>
-                    </li>
-                  </ul>
+                  {formQuotes.map((item) => (
+                    <div key={item.service} className={styles.formQuoteItem}>
+                      <p className={styles.formQuoteService}>{item.label}</p>
+                      <p className={styles.formQuotePrice}>
+                        {item.quote.isCustomQuote ? t.contact.formEstimateCustom : item.quote.price}
+                      </p>
+                      <ul className={styles.formQuoteDetails}>
+                        <li>
+                          <span>{t.contact.formEstimateTier}</span>
+                          <strong>{item.quote.tierLabel}</strong>
+                        </li>
+                        {item.quote.cleaners && (
+                          <li>
+                            <span>{t.contact.formEstimateCleaners}</span>
+                            <strong>{item.quote.cleaners}</strong>
+                          </li>
+                        )}
+                        <li>
+                          <span>{t.contact.formEstimateTime}</span>
+                          <strong>{item.quote.time}</strong>
+                        </li>
+                      </ul>
+                    </div>
+                  ))}
+                  {formQuotes.length > 1 && (
+                    <p className={styles.formQuoteTotal}>
+                      {t.contact.formEstimateTotal}:{" "}
+                      {hasCustomQuote
+                        ? t.contact.formEstimateCustom
+                        : `€${numericQuoteTotal.toLocaleString(language === "nl" ? "nl-NL" : "en-GB")}`}
+                    </p>
+                  )}
                   <p className={styles.formQuoteHint}>{t.contact.formEstimateHint}</p>
                 </div>
               )}
@@ -1147,7 +1208,7 @@ export default function FixedHomePage() {
               <button
                 className={styles.primaryAction}
                 type="submit"
-                disabled={!selectedService || parsedSquareMeters <= 0 || !quote || formStatus === "sending"}
+                disabled={!formServices.length || parsedSquareMeters <= 0 || !formQuotes.length || formStatus === "sending"}
               >
                 {formStatus === "sending" ? t.contact.formSending : t.contact.formSubmit}
               </button>

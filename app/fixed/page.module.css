@@ -1139,6 +1139,46 @@
   margin-bottom: 8px;
 }
 
+.formFieldHint {
+  margin: 0 0 12px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.formServiceGroup {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.formServiceOption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.formServiceOptionActive {
+  border-color: rgba(126, 216, 199, 0.55);
+  background: rgba(126, 216, 199, 0.14);
+}
+
+.formServiceOption input {
+  width: auto;
+  margin: 0;
+  accent-color: #7ed8c7;
+  flex: 0 0 auto;
+}
+
 .formChoiceGroup {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1182,10 +1222,40 @@
 }
 
 .formQuotePrice {
-  margin: 10px 0 0;
-  font-size: clamp(28px, 4vw, 36px);
+  margin: 6px 0 0;
+  font-size: clamp(24px, 3vw, 32px);
   font-weight: 800;
   letter-spacing: -0.04em;
+  color: #ffffff;
+}
+
+.formQuoteItem {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.formQuoteItem:first-of-type {
+  margin-top: 10px;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.formQuoteService {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.formQuoteTotal {
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 18px;
+  font-weight: 800;
   color: #ffffff;
 }
 
@@ -1763,6 +1833,11 @@
     padding: 24px 20px;
     border-radius: 24px;
     gap: 32px;
+  }
+
+  .formServiceGroup,
+  .formChoiceGroup {
+    grid-template-columns: 1fr;
   }
 
   .siteFooterBand {
